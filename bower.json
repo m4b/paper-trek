@@ -1,0 +1,16 @@
+{
+  "name": "paper-trek",
+  "description": "Boldly going where no paper has gone before",
+  "homepage": "http://www.m4b.io/projects/paper-trek/",
+    "keywords": [
+	"star", "trek", "star-trek", "paper", "material", "design"
+  ],
+  "author": "m4b",
+  "private": true,
+  "dependencies": {
+      "polymer": "Polymer/polymer#latest",
+      "iron-elements": "PolymerElements/iron-elements#latest",
+      "paper-elements": "PolymerElements/paper-elements#latest",
+      "neon-elements": "PolymerElements/neon-elements#latest"
+  }
+}
