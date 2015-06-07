@@ -53,11 +53,29 @@ var seasonColors = [
     {"backgroundColor": "#FF6E40", "color":"#000"}  // orange-red
     ];
 
-var series = [{"title" : "original"},
-        {"title" : "tng"},
-        {"title" : "ds9"},
-        {"title" : "voyager"},
-        {"title" : "enterprise"}];
+var series =
+    [
+        {
+            prettyTitle: "Original";
+            title: "original",
+        },
+        {
+            prettyTitle: "The Next Generation";
+            title: "tng"
+        },
+        {
+            prettyTitle: "Deep Space Nine";
+            title: "ds9"
+        },
+        {
+            prettyTitle: "Voyager";
+            title: "voyager"
+        },
+        {
+            prettyTitle: "Enterprise";
+            title: "enterprise"
+        }
+    ];
 
 var groups = {
     "ds9": [
