@@ -56,23 +56,23 @@ var seasonColors = [
 var series =
     [
         {
-            prettyTitle: "Original";
+            prettyTitle: "Original",
             title: "original",
         },
         {
-            prettyTitle: "The Next Generation";
+            prettyTitle: "The Next Generation",
             title: "tng"
         },
         {
-            prettyTitle: "Deep Space Nine";
+            prettyTitle: "Deep Space Nine",
             title: "ds9"
         },
         {
-            prettyTitle: "Voyager";
+            prettyTitle: "Voyager",
             title: "voyager"
         },
         {
-            prettyTitle: "Enterprise";
+            prettyTitle: "Enterprise",
             title: "enterprise"
         }
     ];
