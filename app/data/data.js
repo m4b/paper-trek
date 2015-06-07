@@ -10,6 +10,21 @@ function indexOfEpisodeTitle(series, title){
   return null;
 }
 
+function series2idx(series){
+    if (series === "original")
+        return 0;
+    if (series === "tng")
+        return 1;
+    if (series === "ds9")
+        return 2;
+    if (series === "voyager")
+        return 3;
+    if (series === "enterprise")
+        return 4;
+    
+    return null;
+}
+
 function seriesPrettyLookup(key){
     if (key == "tng")
         return "The Next Generation";
