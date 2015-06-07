@@ -273,6 +273,173 @@ var groups = {
     ]
 };
 
+var testdata =
+    {
+    "ds9": [
+        {
+            "airdate": "1993-01-03",
+            "episode": "01/02",
+            "href": "http://en.memory-alpha.org/wiki/Emissary_%28episode%29",
+            "number": "1x01/02",
+            "prodno": "40511-721",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "46379.1",
+            "thumb": {
+                "href": "http://vignette2.wikia.nocookie.net/memoryalpha/images/1/19/Sisko_and_Locutus_in_Prophet_Vision.jpg/revision/latest/scale-to-width/292?cb=20121114003252&path-prefix=en",
+                "name": "Sisko_and_Locutus_in_Prophet_Vision.jpg"
+            },
+            "title": "Emissary"
+        },
+        {
+            "airdate": "1993-01-09",
+            "episode": "03",
+            "href": "http://en.memory-alpha.org/wiki/Past_Prologue_%28episode%29",
+            "number": "1x03",
+            "prodno": "40511-404",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "Unknown",
+            "thumb": {
+                "href": "http://vignette2.wikia.nocookie.net/memoryalpha/images/8/8e/Tahna_Los_with_Lursa_and_B%27Etor.jpg/revision/latest/scale-to-width/292?cb=20050922081225&path-prefix=en",
+                "name": "Tahna_Los_with_Lursa_and_BEtor.jpg"
+            },
+            "title": "Past Prologue"
+        },
+        {
+            "airdate": "1993-01-17",
+            "episode": "04",
+            "href": "http://en.memory-alpha.org/wiki/A_Man_Alone_%28episode%29",
+            "number": "1x04",
+            "prodno": "40511-403",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "46421.5",
+            "thumb": {
+                "href": "http://vignette3.wikia.nocookie.net/memoryalpha/images/1/16/Ibudans_second_clone.jpg/revision/latest/scale-to-width/292?cb=20070513153901&path-prefix=en",
+                "name": "Ibudans_second_clone.jpg"
+            },
+            "title": "A Man Alone"
+        },
+        {
+            "airdate": "1993-01-24",
+            "episode": "05",
+            "href": "http://en.memory-alpha.org/wiki/Babel_%28episode%29",
+            "number": "1x05",
+            "prodno": "40511-405",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "46423.7",
+            "thumb": {
+                "href": "http://vignette3.wikia.nocookie.net/memoryalpha/images/f/fc/Babel_virus.jpg/revision/latest/scale-to-width/292?cb=20050922083718&path-prefix=en",
+                "name": "Babel_virus.jpg"
+            },
+            "title": "Babel"
+        },
+        {
+            "airdate": "1993-01-30",
+            "episode": "06",
+            "href": "http://en.memory-alpha.org/wiki/Captive_Pursuit_%28episode%29",
+            "number": "1x06",
+            "prodno": "40511-406",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "46477.5",
+            "thumb": {
+                "href": "http://vignette2.wikia.nocookie.net/memoryalpha/images/0/01/Quark_Obrien_Tosk.jpg/revision/latest/scale-to-width/292?cb=20050921045528&path-prefix=en",
+                "name": "Quark_Obrien_Tosk.jpg"
+            },
+            "title": "Captive Pursuit"
+        },
+        {
+            "airdate": "1993-02-06",
+            "episode": "07",
+            "href": "http://en.memory-alpha.org/wiki/Q-Less_%28episode%29",
+            "number": "1x07",
+            "prodno": "40511-407",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "46531.2",
+            "thumb": {
+                "href": "http://vignette2.wikia.nocookie.net/memoryalpha/images/b/b2/Q_and_Vash_DS9.jpg/revision/latest/scale-to-width/292?cb=20050910113449&path-prefix=en",
+                "name": "Q_and_Vash_DS9.jpg"
+            },
+            "title": "Q-Less"
+        },
+        {
+            "airdate": "1993-02-13",
+            "episode": "08",
+            "href": "http://en.memory-alpha.org/wiki/Dax_%28episode%29",
+            "number": "1x08",
+            "prodno": "40511-408",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "46910.1",
+            "thumb": {
+                "href": "http://vignette1.wikia.nocookie.net/memoryalpha/images/e/e2/Dax_on_trial.jpg/revision/latest/scale-to-width/292?cb=20050922081355&path-prefix=en",
+                "name": "Dax_on_trial.jpg"
+            },
+            "title": "Dax"
+        },
+        {
+            "airdate": "1993-02-20",
+            "episode": "09",
+            "href": "http://en.memory-alpha.org/wiki/The_Passenger_%28episode%29",
+            "number": "1x09",
+            "prodno": "40511-409",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "Unknown",
+            "thumb": {
+                "href": "http://vignette2.wikia.nocookie.net/memoryalpha/images/2/2b/Rao_Vantika.jpg/revision/latest/scale-to-width/292?cb=20050922081542&path-prefix=en",
+                "name": "Rao_Vantika.jpg"
+            },
+            "title": "The Passenger"
+        },
+        {
+            "airdate": "1993-03-14",
+            "episode": "10",
+            "href": "http://en.memory-alpha.org/wiki/Move_Along_Home_%28episode%29",
+            "number": "1x10",
+            "prodno": "40511-410",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "Unknown",
+            "thumb": {
+                "href": "http://vignette3.wikia.nocookie.net/memoryalpha/images/3/31/Wadi.jpg/revision/latest/scale-to-width/292?cb=20050921033749&path-prefix=en",
+                "name": "Wadi.jpg"
+            },
+            "title": "Move Along Home"
+        },
+        {
+            "airdate": "1993-03-21",
+            "episode": "11",
+            "href": "http://en.memory-alpha.org/wiki/The_Nagus_%28episode%29",
+            "number": "1x11",
+            "prodno": "40511-411",
+            "season": "1",
+            "series": "ds9",
+            "seriesPretty": "Deep Space Nine",
+            "stardate": "Unknown",
+            "thumb": {
+                "href": "http://vignette2.wikia.nocookie.net/memoryalpha/images/4/45/Quark_tells_Odo_to_kiss_it.jpg/revision/latest/scale-to-width/292?cb=20050920134438&path-prefix=en",
+                "name": "Quark_tells_Odo_to_kiss_it.jpg"
+            },
+            "title": "The Nagus"
+        }
+    ]
+    };
+
+
 var data =
     {
     "ds9": [
