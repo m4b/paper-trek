@@ -62,22 +62,21 @@
    Polymer({
      is: "episode-card",
 
+     
      behaviors: [
-       Polymer.NeonAnimatableBehavior
+       Polymer.NeonAnimationRunnerBehavior
      ],
 
      properties: {
 
-       entryAnimation: {
-         value: 'scale-up-animation'
-       },
-       exitAnimation: {
-         value: 'fade-out-animation'
-       },
-       
-       hideButton: {
-         type: Boolean,
-         value: false,
+       animationConfig: {
+         type: Object,
+         value: function() {
+           return {
+             name: 'fade-out-animation',
+             node: this
+           }
+         }
        },
        
        episode: {
@@ -88,7 +87,8 @@
          value: function(){
            return {
              title: 'Untitled',
-             series: 'None',
+             seriesPretty: 'None',
+             series: 'none',
              season: 0,
              episode: 0,
              thumb: {
@@ -108,6 +108,19 @@
 
      },
 
+     animate: function() {
+       console.log("card animating");
+       this.playAnimation();
+     },
+
+     listeners: {
+       'neon-animation-finish': '_onNeonAnimationFinish'
+     },
+     
+     _onNeonAnimationFinish: function() {
+       console.log('animation finish!');
+     },
+     
      _episodeChanged: function(){
        console.log("episode changed");
        this._imagePath = "../../images/episodes/" + this.episode.thumb.name;

@@ -45,11 +45,9 @@
 	</paper-toolbar>
         <!-- neon-animated-pages goes here -->
         <neon-animated-pages selected="{{_selected}}">
-          <episode-generator settings="[[_settings]]"></episode-generator>
+          <episode-generator id="episodeGenerator" settings="[[_settings.random]]"></episode-generator>
+          <settings-page settings="{{_settings}}"></settings-page>
           <div>TODO: Episode List</div>
-          <settings-page settings="{{_settings}}">
-            <h3>Generate Random Episodes From</h3>
-          </settings-page>
         </neon-animated-pages>
       </paper-header-panel>
 
@@ -122,14 +120,14 @@
    },
 
    ready: function(){
-     console.log("ready");
+     console.log("paper-trek ready");
      this.$.drawerPanel.forceNarrow = true;
 
      this._episode = data.ds9[0];
      
      console.log("_settings", this._settings);
      console.log("_episode", this._episode);
-     
+     console.log("TEST", this.$.episodeGenerator.settings);
    }
 
  });

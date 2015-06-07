@@ -21,7 +21,7 @@
      margin-right: 16px;
    }
 
-   .content-wrapper > ::content h3 {
+   h3 {
      background-color: var(--trek-header-color);
      font-weight: 300;
      margin-top: 0px;
@@ -33,11 +33,8 @@
 
   <template>
     <paper-material elevation="2">
-      <!-- todo: remove h3 wrapper, probably not necessary with new animation api -->
-      <div class="content-wrapper flex">
-        <content class="flex"></content>
-      </div>
-      <section class="content">
+      <h3 id="header" class="flex">Generate Random Episodes From</h3>
+      <section id="content" class="content">
         <template is="dom-repeat" items="[[_keys]]">
           <div class="layout center horizontal row">
             <span class="flex">[[item.displayName]]</span>
@@ -53,16 +50,58 @@
    is: "settings-page",
 
    behaviors: [
-     Polymer.NeonAnimatableBehavior
+     Polymer.NeonSharedElementAnimatableBehavior
    ],
    
    properties: {
 
-     entryAnimation: {
-       value: 'scale-up-animation'
+     sharedElements: {
+       type: Object,
+       value: function() {
+         return {
+           'genHero': this.$.header,
+           'genBody': this.$.content
+         }
+       }
      },
-     exitAnimation: {
-       value: 'fade-out-animation'
+     
+     animationConfig: {
+       type: Object,
+       value: function() {
+         return {
+           // the outgoing page defines the 'exit' animation
+           'entry':
+           [
+             {
+               name: 'hero-animation',
+               id: 'genBody',
+               toPage: this
+             },
+             {
+               name: 'hero-animation',
+               id: 'genHero',
+               toPage: this,
+               timing: {
+                 delay: 150
+               }
+             }
+           ],
+           'exit':
+           [
+             {
+              name: 'hero-animation',
+               id: 'genHero',
+               fromPage: this
+             }/*
+             {
+               name: 'hero-animation',
+               id: 'genBody',
+               fromPage: this
+             }
+             */
+           ]
+         }
+       }
      },
      
      _keys: {
@@ -107,11 +146,11 @@
        value: function(){
          return {
            random:{ /* only random settings for now */
-             original: true,
-             tng: true,
-             ds9: true,
-             voyager: true,
-             enterprise: true
+                    original: true,
+                    tng: true,
+                    ds9: true,
+                    voyager: true,
+                    enterprise: true
            }
          };
        }
