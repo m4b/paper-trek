@@ -87,7 +87,8 @@
            }
          }
        },
-       
+
+       /* this comes in as the .random object of the settings (the only kind so far) */
        settings: {
          type: Object
        },
@@ -133,6 +134,7 @@
        // now get the new episode, and change what we're displaying
        this._episode = series[episodeIndex];
 
+       // this should work but it doesn't       
        this.$.card.animate();
      },
      

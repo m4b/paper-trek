@@ -23,7 +23,7 @@ function seriesPrettyLookup(key){
         return "Original";
     console.log("warning: series Lookup received case larger than 4: ", key);
     return "The Next Generation";
-  }
+}
 
 function seriesLookup(index){
       switch (index){
