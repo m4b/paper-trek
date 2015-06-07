@@ -9,8 +9,8 @@
      background-color: var(--trek-primary-text-color);
    }
    /*
-     background-color: #536DFE;
-   */
+      background-color: #536DFE;
+    */
    
    paper-item {
      background-color: var(--trek-header-color);
@@ -120,82 +120,7 @@
        console.log("episode changed");
        this._imagePath = "../../images/episodes/" + this.episode.thumb.name;
        console.log("this._imagePath: ", this._imagePath);
-       console.log("ironimage: ", this.$.thumb.src);
      },
-     
-     /*
-        episodes : null,
-        randomEpisode : null,
-
-        episodesReceived : function(result){
-        var res = result.detail.response;
-        console.log("got: ", res);
-        this.episodes = res;
-        this.newEpisode();
-        },
-
-        setEpisode : function(episode, series){
-        this.episode = episode;
-
-        this.episode.series = seriesPrettyLookup(series);
-        this.episode.seriesHash = series;
-        // split the season and episode for pretty display
-        var tmp = this.episode.number.split("x");
-        this.episode.seasonNumber = tmp[0]
-        this.episode.episodeNumber = tmp[1]
-
-
-        //        this.episode = episode;
-
-        },
-
-        newEpisode : function(){
-
-        var seriesBin = [];
-
-        // iterate through, create series key bin from which to select
-        // this probably makes certain configurations less random, or some other obscure point
-        // don't care
-        console.log("randomSettings: ", this.randomSettings);
-        for (var key in this.randomSettings) {
-        if (this.randomSettings.hasOwnProperty(key)) {
-        if (this.randomSettings[key]){
-        seriesBin.push(key);
-        }
-        }
-        }
-
-        // choose which series: note all series have equal chance of being chosen,
-        // not waited by number of episodes
-        var seriesIndex = getRandomInt(0, seriesBin.length - 1);
-        // lookup the series from our episode json data, using the index on the bin
-        var series = this.episodes[seriesBin[seriesIndex]];
-
-
-        console.log("series: ", series);
-        console.log("series index: ", seriesIndex);
-        console.log("series length: ", series.length);
-
-        var max = series.length - 1;
-        var episodeIndex = getRandomInt(0, max);
-        //        console.log("episode index: ", episodeIndex);
-
-        // now get the actual episode index
-        this.randomEpisode = series[episodeIndex];
-
-        this.setEpisode(this.randomEpisode, seriesBin[seriesIndex]);
-
-
-        // we have our random episode ready for display
-        //        this.episode = this.randomEpisode;
-        //        this.episodeTitle = this.episode.title;
-
-
-        return this.episode;
-
-        },
-        
-      */
      
      ready: function(){
        console.log("episode-card ready");
