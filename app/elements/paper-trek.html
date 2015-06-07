@@ -1,5 +1,25 @@
 <dom-module id="paper-trek">
   <style>
+   :host {
+     --paper-menu-selected-item: var(--trek-selected-color);
+     --paper-menu-focused-item: var(--trek-selected-color);
+   }
+
+   paper-item[iron-selected] {
+     background-color: var(--trek-selected-color);
+   }
+
+   paper-toolbar {
+     background-color: var(--trek-primary-color);
+     color: var(--trek-primary-text-color);
+   }
+
+   settings-page {
+
+     margin-left: 30px;
+
+   }
+   
   </style>
   <template>
     <paper-drawer-panel id="drawerPanel">
@@ -8,18 +28,29 @@
 	  <div>Paper Trek</div>
 	</paper-toolbar>
 	<paper-menu selected="{{_selected}}">
-	  <paper-item>Menu 1</paper-item>
-	  <paper-item>Menu 2</paper-item>
+          <template is="dom-repeat" items="[[_pages]]">
+	    <paper-item>
+              <iron-icon icon="[[item.icon]]"></iron-icon>
+              <span>[[item.name]]</span>
+            </paper-item>
+          </template>
 	</paper-menu>
       </paper-header-panel>
 
-      <paper-header-panel main mode="standard" tall-class="medium-tall">
+      <paper-header-panel main mode="{{_mode}}" tall-class="medium-tall">
 	<paper-toolbar>
           <paper-icon-button paper-drawer-toggle icon="menu">
           </paper-icon-button>
-	  <div>Sweetness</div>
+	  <div>{{_title}}</div>
 	</paper-toolbar>
-	<div>The content</div>
+        <!-- neon-animated-pages goes here -->
+        <neon-animated-pages selected="{{_selected}}">
+          <episode-card episode="{{_episode}}"></episode-card>
+          <div>TODO: Episode List</div>
+          <settings-page settings="{{_settings}}">
+            <h3>Generate Random Episodes From</h3>
+          </settings-page>
+        </neon-animated-pages>
       </paper-header-panel>
 
     </paper-drawer-panel>
@@ -27,21 +58,79 @@
   </template>
 </dom-module>
 <script>
-Polymer({
-  is: "paper-trek",
+ Polymer({
+   is: "paper-trek",
 
-  properties: {
-    _selected: {
-      type: Number,
-      value: 0,
-      notify: true
-    }
-  },
+   properties: {
 
-  ready: function(){
-    console.log("ready");
-    this.$.drawerPanel.forceNarrow = true;
-  }
+     _pages: {
+       type: Array,
+       readOnly: true,
+       value: function(){
+         return [
+           {name: 'Episode Generator',
+            hash:'random', icon:'refresh',
+            url:'', mode:'standard'},
+           {name: 'All Episodes', hash:'all',
+            icon:'view-list', mode: 'standard'},
+           {name: 'Settings', hash:'settings',
+            icon:'settings', url:'', mode:'cover'}
+         ]
+       }
+     },
 
-});
+     _mode: {
+       type: String,
+       value: 'standard',
+       notify: true
+     },
+
+     _selected: {
+       type: Number,
+       value: 0,
+       notify: true,
+       observer: '_selectedChanged'
+     },
+     
+     _title: {
+       type: String,
+       notify: true,
+       computed: '_getTitle(_selected)'
+     },
+
+     /* one way data binding, flowing up from child (settings-page) */
+     _settings: {
+       type: Object
+     },
+
+     _episode: {
+       type: Object,
+       notify: true
+     }
+   },
+
+   _selectedChanged: function(selected){
+     this.$.drawerPanel.togglePanel();
+     this._mode = this._pages[this._selected].mode;
+     console.log("this.mode", this._mode);
+   },
+   
+   _getTitle: function(selected){
+     console.log("_pages: ", this._pages);
+     console.log("getting title with: ", selected);
+     return this._pages[selected].name;
+   },
+
+   ready: function(){
+     console.log("ready");
+     this.$.drawerPanel.forceNarrow = true;
+
+     this._episode = data.ds9[0];
+     
+     console.log("_settings", this._settings);
+     console.log("_episode", this._episode);
+     
+   }
+
+ });
 </script>

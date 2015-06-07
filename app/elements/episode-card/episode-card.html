@@ -1,0 +1,226 @@
+<dom-module id="episode-card">
+  <style>
+   .body {
+     padding: 16px;
+   }
+
+   paper-material {
+     margin: 16px;
+     background-color: var(--trek-primary-text-color);
+   }
+   /*
+     background-color: #536DFE;
+   */
+   
+   paper-item {
+     background-color: var(--trek-header-color);
+     color: var(--trek-primary-text-color);
+     margin-top: 0px;
+     padding: 16px;
+     font-weight: 150;
+     margin-bottom: 16px;
+   }
+
+   .text-accent {
+     color: #000;
+     opacity: .54;
+   }
+
+   a {
+     text-decoration: none;
+     color: var(--trek-highlight-color);
+   }
+
+   paper-fab {
+
+     position: fixed;
+     right: 16px;
+     top: 16px;
+     z-index: 3;
+     background-color: var(--trek-highlight-color);
+   }
+
+  </style>
+
+  <template>
+    <paper-material elevation="3" id="core_card" class="layout vertical">
+      <paper-item>
+        <h1>{{episode.title}}</h1>
+      </paper-item>
+      <section class="body">
+        <span class="episode_body" class="flex"><span>{{episode.seriesPretty}}</span>
+          <p class="episode_body">
+            <span class="text-accent">S</span><span>{{episode.season}}</span>
+            <span class="text-accent">E</span><span>{{episode.episode}}</span>
+          </p>
+        </span>
+        <iron-image id="thumb" style="width: 300px; height: 300px;" src="[[_imagePath]]" preload sizing="cover"></iron-image>
+        <div class="episode_text" hero hero-id="heroBottom" cross-fade>
+          <h3 class="layout horizontal around-justified">
+            <span class="flex">
+              <em>Stardate: </em>
+              <span>{{episode.stardate}}</span>
+            </span>
+          </h3>
+          <p><em>Airdate: </em><span>{{episode.airdate}}</span></p>
+          <p><a href$="{{episode.href}}">Memory Alpha</a></p>
+        </div>
+      </section>
+      <paper-fab hidden="[[hideButton]]" icon="refresh" on-tap="generateNewEpisode"></paper-fab>
+    </paper-material>
+
+  </template>
+  <script>
+
+   function getRandomInt(min, max) {
+     return Math.floor(Math.random() * (max - min + 1)) + min;
+   }
+
+   Polymer({
+     is: "episode-card",
+
+     behaviors: [
+       Polymer.NeonAnimatableBehavior
+     ],
+
+     properties: {
+
+       entryAnimation: {
+         value: 'scale-up-animation'
+       },
+       exitAnimation: {
+         value: 'fade-out-animation'
+       },
+       
+       hideButton: {
+         type: Boolean,
+         value: false,
+       },
+       
+       episode: {
+         type: Object,
+         notify: true,
+         reflectAttribute: true,
+         observer: '_episodeChanged'
+         /*
+            
+            value: function(){
+            return
+            {
+            title: "Untitled",
+            series: null,
+            seasonNumber: 0,
+            episodeNumber: 0,
+            thumb: {
+            name: null
+            },
+            stardate: "Unknown",
+            airdate: "Never",
+            href: "http://example.com"
+            };
+            }
+            
+          */
+       },
+
+       _imagePath: {
+         type: String,
+         notify: true
+       }
+
+     },
+
+     _episodeChanged: function(){
+       console.log("episode changed");
+       this._imagePath = "../../images/episodes/" + this.episode.thumb.name;
+       console.log("this._imagePath: ", this._imagePath);
+       console.log("ironimage: ", this.$.thumb.src);
+     },
+
+     generateNewEpisode: function(e){
+       console.log("generatingNewEpisode");
+     },
+     
+     /*
+        episodes : null,
+        randomEpisode : null,
+
+        episodesReceived : function(result){
+        var res = result.detail.response;
+        console.log("got: ", res);
+        this.episodes = res;
+        this.newEpisode();
+        },
+
+        setEpisode : function(episode, series){
+        this.episode = episode;
+
+        this.episode.series = seriesPrettyLookup(series);
+        this.episode.seriesHash = series;
+        // split the season and episode for pretty display
+        var tmp = this.episode.number.split("x");
+        this.episode.seasonNumber = tmp[0]
+        this.episode.episodeNumber = tmp[1]
+
+
+        //        this.episode = episode;
+
+        },
+
+        newEpisode : function(){
+
+        var seriesBin = [];
+
+        // iterate through, create series key bin from which to select
+        // this probably makes certain configurations less random, or some other obscure point
+        // don't care
+        console.log("randomSettings: ", this.randomSettings);
+        for (var key in this.randomSettings) {
+        if (this.randomSettings.hasOwnProperty(key)) {
+        if (this.randomSettings[key]){
+        seriesBin.push(key);
+        }
+        }
+        }
+
+        // choose which series: note all series have equal chance of being chosen,
+        // not waited by number of episodes
+        var seriesIndex = getRandomInt(0, seriesBin.length - 1);
+        // lookup the series from our episode json data, using the index on the bin
+        var series = this.episodes[seriesBin[seriesIndex]];
+
+
+        console.log("series: ", series);
+        console.log("series index: ", seriesIndex);
+        console.log("series length: ", series.length);
+
+        var max = series.length - 1;
+        var episodeIndex = getRandomInt(0, max);
+        //        console.log("episode index: ", episodeIndex);
+
+        // now get the actual episode index
+        this.randomEpisode = series[episodeIndex];
+
+        this.setEpisode(this.randomEpisode, seriesBin[seriesIndex]);
+
+
+        // we have our random episode ready for display
+        //        this.episode = this.randomEpisode;
+        //        this.episodeTitle = this.episode.title;
+
+
+        return this.episode;
+
+        },
+        
+      */
+     
+     ready: function(){
+       console.log("episode-card ready");
+       console.log("src", this.$.thumb.src);
+     }
+   });
+
+  </script>
+
+</dom-module>

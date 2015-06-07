@@ -1,0 +1,158 @@
+<dom-module id="settings-page">
+  <style>
+   :host {
+     --paper-toggle-button-checked-ink-color: var(--trek-highlight-color);
+     --paper-toggle-button-checked-button-color: var(--trek-highlight-color);
+     --paper-toggle-button-checked-bar-color: var(--trek-highlight-color);
+   }
+
+   paper-material{
+     background-color: var(--trek-white-color);
+     margin: 16px;     
+   }
+
+   .content {
+     padding: 16px;
+   }
+
+   .row {
+     margin-left: 16px;
+     margin-top: 16px;
+     margin-right: 16px;
+   }
+
+   .content-wrapper > ::content h3 {
+     background-color: var(--trek-header-color);
+     font-weight: 300;
+     margin-top: 0px;
+     margin-bottom: 0px;
+     padding: 16px;
+   }
+
+  </style>
+
+  <template>
+    <paper-material elevation="2">
+      <div class="content-wrapper flex">
+        <content class="flex"></content>
+      </div>
+      <section class="content">
+        <template is="dom-repeat" items="[[_keys]]">
+          <div class="layout center horizontal row">
+            <span class="flex">[[item.displayName]]</span>
+            <paper-toggle-button id$="[[item.key]]" checked="[[item.checked]]" on-change="_onChange"></paper-toggle-button>
+          </div>
+        </template>
+      </section>
+    </paper-material>      
+  </template>
+</dom-module>
+<script>
+ Polymer({
+   is: "settings-page",
+
+   behaviors: [
+     Polymer.NeonAnimatableBehavior
+   ],
+   
+   properties: {
+
+     entryAnimation: {
+       value: 'scale-up-animation'
+     },
+     exitAnimation: {
+       value: 'fade-out-animation'
+     },
+     
+     _keys: {
+       type: Array,
+       notify: true,
+       value: function(){
+         return [
+           {
+             key: "original",
+             displayName: "The Original",
+             checked: true
+           },
+           {
+             key: "tng",
+             displayName: "The Next Generation",
+             checked: true
+           },
+           {
+             key:  "ds9",
+             displayName: "Deep Space Nine",
+             checked: true
+           },
+           {
+             key:  "voyager",
+             displayName: "Voyager",
+             checked: true
+           },
+           {
+             key:  "enterprise",
+             displayName: "Enterprise",
+             checked: true
+           }
+         ];
+       }
+     },
+
+     /* data-binding is one-way, upward */
+     settings: {
+       type: Object,
+       notify: true,
+       readOnly: true,
+       value: function(){
+         return {
+           random:{ /* only random settings for now */
+             original: true,
+             tng: true,
+             ds9: true,
+             voyager: true,
+             enterprise: true
+           }
+         };
+       }
+     }
+   },
+   
+   _onChange: function(e){
+     var id = e.srcElement.id;
+     var checked = e.srcElement.checked;
+     this.settings.random[id] = checked;
+     console.log("settings: ", this.settings);
+     window.localStorage[id] = checked;
+   },
+
+   created: function(){
+
+     if (window.localStorage["original"] === undefined){
+       var keys = ["original", "tng", "ds9", "voyager", "enterprise"];
+       console.log("app first load");
+       for (var i in keys){
+         var key = keys[i];
+         window.localStorage[key] = true;
+         console.log("loop: ", key, window.localStorage[key]);            
+       }
+     }
+   },
+
+   ready: function(){
+
+     var i = 0;
+     for (var series in this.settings.random){
+       var checked = window.localStorage[series] == "true";
+       this.settings.random[series] = checked;
+       this._keys[i].checked = checked;
+       i++;
+     }
+     
+     console.log("ready settings-page init: ", this.settings);
+     console.log("_keys: ", this._keys);
+
+   }
+
+ });
+
+</script>
