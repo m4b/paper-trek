@@ -31,15 +31,6 @@
      color: var(--trek-highlight-color);
    }
 
-   paper-fab {
-
-     position: fixed;
-     right: 16px;
-     top: 16px;
-     z-index: 3;
-     background-color: var(--trek-highlight-color);
-   }
-
   </style>
 
   <template>
@@ -66,7 +57,6 @@
           <p><a href$="{{episode.href}}">Memory Alpha</a></p>
         </div>
       </section>
-      <paper-fab hidden="[[hideButton]]" icon="refresh" on-tap="generateNewEpisode"></paper-fab>
     </paper-material>
 
   </template>
@@ -131,10 +121,6 @@
        this._imagePath = "../../images/episodes/" + this.episode.thumb.name;
        console.log("this._imagePath: ", this._imagePath);
        console.log("ironimage: ", this.$.thumb.src);
-     },
-
-     generateNewEpisode: function(e){
-       console.log("generatingNewEpisode");
      },
      
      /*
@@ -213,7 +199,6 @@
      
      ready: function(){
        console.log("episode-card ready");
-       console.log("src", this.$.thumb.src);
      }
    });
 
