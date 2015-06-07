@@ -99,11 +99,6 @@
      /* one way data binding, flowing up from child (settings-page) */
      _settings: {
        type: Object
-     },
-
-     _episode: {
-       type: Object,
-       notify: true
      }
    },
 
@@ -123,11 +118,9 @@
      console.log("paper-trek ready");
      this.$.drawerPanel.forceNarrow = true;
 
-     this._episode = data.ds9[0];
-     
      console.log("_settings", this._settings);
-     console.log("_episode", this._episode);
-     console.log("TEST", this.$.episodeGenerator.settings);
+     this.$.episodeGenerator.getRandomEpisode();
+ 
    }
 
  });
