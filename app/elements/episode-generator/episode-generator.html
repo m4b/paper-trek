@@ -1,0 +1,56 @@
+<dom-module id="episode-generator">
+  <template>
+    <style>
+     
+    </style>
+
+
+    <episode-card episode="[[_episode]]">
+      
+    </episode-card>
+    
+  </template>
+
+
+  <script>
+
+   Polymer({
+     is: "episode-generator",
+
+     behaviors: [
+       Polymer.NeonAnimatableBehavior
+     ],
+     
+     properties: {
+
+       entryAnimation: {
+         value: 'scale-up-animation'
+       },
+       exitAnimation: {
+         value: 'fade-out-animation'
+       },
+
+       _episode: {
+         type: Object,
+         notify: true
+       }
+
+     }
+
+     getRandomEpisode: function(){
+
+     },
+     
+     _getRandomInt: function(min, max) {
+       return Math.floor(Math.random() * (max - min + 1)) + min;
+     },
+
+     ready: function(){
+       this._episode = this.getRandomEpisode();
+     }
+
+   });
+
+  </script>
+  
+</dom-module>
