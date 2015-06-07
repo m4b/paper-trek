@@ -1,0 +1,223 @@
+<dom-module id="episode-list">
+  <style>
+
+   :host {
+     --paper-menu-selected-item: var(--trek-selected-color);
+   }
+
+   paper-material {
+   }
+
+   paper-header-panel {
+   }
+
+   paper-button::shadow paper-ripple {
+     color: var(--trek-primary-color);
+   }
+
+   paper-material {
+     margin: 16px;
+   }
+
+   paper-toolbar {
+     background-color: var(--trek-header-color);
+   }
+
+   paper-item {
+     border-width: 1px;
+     border-color: var(--trek-header-color);
+   }
+
+   .episodes {
+     background-color: var(--trek-white-color);
+     height: 300px;
+   }
+
+   .divider {
+     padding: 16px;
+     margin-top: 0px;
+     margin-bottom: 0px;
+     font-weight: 300;
+   }
+
+   .seriesTitle {
+     background-color: var(--trek-header-color);
+   }
+
+   h1 {
+     text-decoration: none;
+     font-weight: normal;
+   }
+
+   h2 {
+     color: var(--trek-white-color);
+     font-weight: 300;
+   }
+   
+   .titleCard {
+     background-color: var(--trek-header-color);
+     color: var(--trek-white-color);
+     padding: 16px;
+     font-weight: 300;
+   }
+
+   iron-icon, paper-icon-button {
+     color: var(--trek-highlight-color);
+   }
+   
+  </style>
+
+
+  <template>
+
+    <neon-animated-pages id="navigationController" selected="{{_selected}}" class="fullbleed layout horizontal">
+
+      <section>
+        <paper-material elevation="[[_elevation]]">
+          <h2 class="titleCard">Choose A Series</h2>
+          <template is="dom-repeat" items="[[_series]]">
+            <paper-button id$="[[item.title]]" class="layout horizontal flex" on-tap="selectSeries">
+              <span class="flex">[[item.prettyTitle]]</span>
+              <iron-icon class="self-center" icon="chevron-right"></iron-icon>
+            </paper-button>
+          </template>
+        </paper-material>
+      </section>
+
+      <section>
+        <paper-material elevation="[[_elevation]]">
+          <paper-header-panel mode="standard" style$="[[_height]]"">
+            <paper-toolbar>
+              <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
+              <h2 class="seriesCard" hero hero-id="heroBottom" id="titleCard">[[_selectedSeries.prettyTitle]]</h2>
+            </paper-toolbar>
+            <div class="episodes">
+              <template is="dom-repeat" items="[[_selectedEpisodes]]">
+                <paper-button on-tap="selectEpisode" class="layout horizontal flex">
+                  <paper-item>
+                    <paper-item-body>
+                      <div>
+                        <span class="flex">[[item.title]]</span>
+                        <iron-icon icon="chevron-right"></iron-icon>
+                      </div>
+                      <div secondary style="text-align: left;">
+                        <span>[[item.number]]</span>
+                      </div>
+                    </paper-item-body>
+                  </paper-item>
+                </paper-button>
+              </template>
+            </div>
+          </paper-header-panel>
+        </paper-material>
+      </section>
+
+      <section>
+        <episode-card id="card" episode="[[_selectedEpisode]]">
+          <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
+        </episode-card>
+      </section>
+      
+    </neon-animated-pages>
+    
+  </template>
+  <script>
+
+   Polymer({
+     is: "episode-list",
+
+     properties: {
+       _selected: {
+         type: Object,
+         value: 0
+       },
+
+       _series: {
+         type: Array
+       },
+
+       _selectedSeries: {
+         type: Object
+       },
+
+       _selectedEpisodes: {
+         type: Array
+       },
+
+       _selectedEpisode: {
+         type: Object
+       },
+
+       _elevation: {
+         type: Number,
+         computed: '_getElevation(_selected)'
+       },
+
+       _height: {
+         type: String,
+         value: "height: 500px;"
+       }
+       
+     },
+
+     _getElevation: function(selected){
+       console.log("getting elevation", 5 - (selected * 2));
+       return 5 - (selected * 2);
+     },
+
+     goBack: function(){
+       this.$.navigationController.selectPrevious();
+     },
+
+     selectSeries: function(e){
+       console.log("model", e.model.index);
+       var idx = e.model.index;
+       var id = this._series[idx].title;
+
+       this._selectedSeries = series[idx];       
+       this._selectedEpisodes = data[id];
+
+       console.log("selectedSeries: ", this._selectedSeries);
+       console.log("selectedEpisodes: ", this._selectedEpisodes);       
+       this.$.navigationController.selectNext();
+     },
+
+     selectEpisode: function(e){
+       console.log("model", e.model.index);
+       var idx = e.model.index;
+       this._selectedEpisode = this._selectedEpisodes[idx];
+       console.log("episode: ", this.selectedEpisode);
+       this.$.navigationController.selectNext();
+     },
+
+     ready: function(){
+       console.log("episode-list ready");
+       this._series = series;
+       /* this doesn't recalculate after size change ... :( */
+       var w = window,
+           d = document,
+           e = d.documentElement,
+           g = d.getElementsByTagName('body')[0],
+           x = w.innerWidth || e.clientWidth || g.clientWidth,
+           y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+       console.log("height:", x,y);
+       this._height = "height: " + (y - 64 - 32) + "px;";
+       /* such hacks: subtract size of header, and 16*2 for margin top and bottom
+          to get inner paper-header-panel height, all because it requires a specific height... */
+     }
+
+   });
+
+  </script>
+</dom-module>
+
+
+<!--
+<core-list
+id="episodeList"
+data="{{episodeData}}"
+groups="{{episodeGroups}}"
+on-core-activate="{{episodeSelected}}">
+</core-list>
+
+-->
