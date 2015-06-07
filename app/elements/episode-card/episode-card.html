@@ -84,26 +84,21 @@
          type: Object,
          notify: true,
          reflectAttribute: true,
-         observer: '_episodeChanged'
-         /*
-            
-            value: function(){
-            return
-            {
-            title: "Untitled",
-            series: null,
-            seasonNumber: 0,
-            episodeNumber: 0,
-            thumb: {
-            name: null
-            },
-            stardate: "Unknown",
-            airdate: "Never",
-            href: "http://example.com"
-            };
-            }
-            
-          */
+         observer: '_episodeChanged',
+         value: function(){
+           return {
+             title: 'Untitled',
+             series: 'None',
+             season: 0,
+             episode: 0,
+             thumb: {
+               name: '../../images/troll_fish.jpg'
+             },
+             stardate: 'Unknown',
+             airdate: 'Never',
+             href: 'http://example.com'
+           };
+         }
        },
 
        _imagePath: {

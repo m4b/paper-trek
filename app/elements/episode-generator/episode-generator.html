@@ -1,22 +1,20 @@
 <dom-module id="episode-generator">
+  <style>
+   paper-fab {
+     position: fixed;
+     right: 16px;
+     top: 16px;
+     z-index: 3;
+     background-color: var(--trek-highlight-color);
+   }
+   
+  </style>
   <template>
-    <style>
-     paper-fab {
-       position: fixed;
-       right: 16px;
-       top: 16px;
-       z-index: 3;
-       background-color: var(--trek-highlight-color);
-     }
-     
-    </style>
-
-
     <episode-card episode="[[_episode]]">
       
     </episode-card>
 
-    <paper-fab hidden="[[hideButton]]" icon="refresh" on-tap="generateNewEpisode"></paper-fab>
+    <paper-fab icon="refresh" on-tap="getRandomEpisode"></paper-fab>
     
   </template>
 
@@ -39,40 +37,19 @@
          value: 'fade-out-animation'
        },
 
+       settings: {
+         type: Object,
+         readOnly: true
+       },
+       
        _episode: {
          type: Object,
          notify: true
        }
 
-     }
+     },
 
-     
      /*
-        episodes : null,
-        randomEpisode : null,
-
-        episodesReceived : function(result){
-        var res = result.detail.response;
-        console.log("got: ", res);
-        this.episodes = res;
-        this.newEpisode();
-        },
-
-        setEpisode : function(episode, series){
-        this.episode = episode;
-
-        this.episode.series = seriesPrettyLookup(series);
-        this.episode.seriesHash = series;
-        // split the season and episode for pretty display
-        var tmp = this.episode.number.split("x");
-        this.episode.seasonNumber = tmp[0]
-        this.episode.episodeNumber = tmp[1]
-
-
-        //        this.episode = episode;
-
-        },
-
         newEpisode : function(){
 
         var seriesBin = [];
@@ -114,11 +91,9 @@
         //        this.episode = this.randomEpisode;
         //        this.episodeTitle = this.episode.title;
 
-
         return this.episode;
 
         },
-        
       */
      
      getRandomEpisode: function(){
