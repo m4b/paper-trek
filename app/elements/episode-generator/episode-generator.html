@@ -62,13 +62,16 @@
              'entry':
              [
                {
-                 name: 'hero-animation',
-                 id: 'genHero',
-                 toPage: this
-               },
-               {
                  name: 'fade-in-animation',
                  node: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'genHero',
+                 toPage: this,
+                 timing: {
+                   delay: 150
+                 }
                }
                /*
                {
