@@ -19,7 +19,7 @@
    neon-animated-pages {
      margin-left: 32px;
      z-index: 4;
-     user-select: none;
+     user-select: none; /* this isn't doing anything */
    }
    
   </style>
@@ -39,14 +39,14 @@
 	</paper-menu>
       </paper-header-panel>
 
-      <paper-header-panel main mode="cover" tall-class="medium-tall">
+      <paper-header-panel main mode="standard" tall-class="medium-tall">
 	<paper-toolbar>
           <paper-icon-button paper-drawer-toggle icon="menu">
           </paper-icon-button>
 	  <div>{{_title}}</div>
 	</paper-toolbar>
         <!-- neon-animated-pages goes here -->
-        <neon-animated-pages selected="{{_selected}}" class="fit">
+        <neon-animated-pages selected="{{_selected}}">
           <episode-list></episode-list>
           <episode-generator id="episodeGenerator" settings="[[_settings.random]]"></episode-generator>
           <settings-page settings="{{_settings}}"></settings-page>
