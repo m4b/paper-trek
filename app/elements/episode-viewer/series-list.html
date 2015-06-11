@@ -1,3 +1,178 @@
-<dom-module id="series-list>
-            
-            </dom-module>
+<dom-module id="series-list"">
+  <style>
+
+   :host {
+     --paper-menu-selected-item: var(--trek-selected-color);
+     @apply(--layout-fit);
+   }
+
+   paper-button::shadow paper-ripple {
+     color: var(--trek-primary-color);
+   }
+   
+   paper-material {
+     margin: 16px;
+     height: auto;
+   }
+
+   paper-toolbar {
+     background-color: var(--trek-header-color);
+   }
+
+   paper-item {
+     border-width: 1px;
+     border-color: var(--trek-header-color);
+   }
+
+   .episodes {
+     background-color: var(--trek-white-color);
+   }
+
+   .divider {
+     padding: 16px;
+     margin-top: 0px;
+     margin-bottom: 0px;
+     font-weight: 300;
+   }
+
+   h1 {
+     text-decoration: none;
+     font-weight: normal;
+   }
+
+   h2 {
+     color: var(--trek-white-color);
+     background-color: var(--trek-header-color);
+     font-weight: 300;
+     padding: 16px;
+   }
+
+   iron-icon, paper-icon-button {
+     color: var(--trek-highlight-color);
+   }
+   
+  </style>
+
+
+  <template>
+
+    <paper-material elevation="[[_elevation]]" class="fit">
+      <paper-header-panel mode="standard">
+        <paper-toolbar id="seriesHeader">
+          <h2>Choose A Series</h2>
+        </paper-toolbar>
+        <template is="dom-repeat" items="[[_series]]">
+          <paper-button id$="[[item.title]]" class="layout horizontal flex" on-tap="selectSeries">
+            <span class="flex">[[item.prettyTitle]]</span>
+            <iron-icon class="self-center" icon="chevron-right"></iron-icon>
+          </paper-button>
+        </template>
+      </paper-header-panel>
+    </paper-material>
+    
+  </template>
+  <script>
+
+   Polymer({
+     is: "episode-list",
+
+     behaviors: [
+       Polymer.NeonSharedElementAnimatableBehavior
+     ],
+
+     properties: {
+       sharedElements: {
+         type: Object,
+         value: function() {
+           return {
+             'genHero': this.$.seriesHeader
+             'genBody': this.$.episodeHeader,
+           }
+         }
+       },
+
+       animationConfig: {
+         type: Object,
+         value: function() {
+           return {
+             // the outgoing page defines the 'exit' animation
+             'exit':
+             [
+               {
+                 name: 'hero-animation',
+                 id: 'genBody',
+                 fromPage: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'genHero',
+                 fromPage: this
+               }
+             ],
+             // incoming defines the 'entry' (for hero)
+             'entry':
+             [
+               {
+                 name: 'fade-in-animation',
+                 node: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'genHero',
+                 toPage: this,
+                 timing: {
+                   delay: 150
+                 }
+               }
+               /*
+               {
+                 name: 'hero-animation',
+                 id: 'genBody',
+                 toPage: this,
+                 timing: {
+                   delay: 150
+                 }
+               }
+               */
+             ]
+           }
+         }
+       },
+     
+       _series: {
+         type: Array
+       },
+
+       _selectedSeries: {
+         type: Object
+       },
+  
+     },
+
+     goBack: function(){
+       this.$.navigationController.selectPrevious();
+     },
+
+     selectSeries: function(e){
+       console.log("model", e.model.index);
+       var idx = e.model.index;
+       var id = this._series[idx].title;
+
+       this._selectedSeries = series[idx];       
+       this._selectedEpisodes = data[id];
+
+       console.log("selectedSeries: ", this._selectedSeries);
+       console.log("selectedEpisodes: ", this._selectedEpisodes);
+       this.onSelect(series[idx]);
+       this.$.navigationController.selectNext();
+     }
+
+     ready: function(){
+       console.log("series-list ready");
+       this._series = series;
+     }
+
+   });
+
+  </script>
+</dom-module>
