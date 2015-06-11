@@ -51,7 +51,7 @@
 	</paper-toolbar>
         <!-- neon-animated-pages goes here -->
         <neon-animated-pages selected="{{_selected}}">
-          <episode-list></episode-list>
+          <episode-viewer></episode-viewer>
           <episode-generator id="episodeGenerator" settings="[[_settings.random]]"></episode-generator>
           <settings-page settings="{{_settings}}"></settings-page>
         </neon-animated-pages>
@@ -109,7 +109,7 @@
    },
 
    _selectedChanged: function(selected){
-     this.$.drawerPanel.togglePanel();
+     this.$.drawerPanel.closeDrawer();
      this._mode = this._pages[this._selected].mode;
      console.log("this.mode", this._mode);
    },

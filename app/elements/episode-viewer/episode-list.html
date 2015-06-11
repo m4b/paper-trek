@@ -1,4 +1,4 @@
-<dom-module id="series-list"">
+<dom-module id="episode-list">
   <style>
 
    :host {
@@ -24,6 +24,10 @@
      border-color: var(--trek-header-color);
    }
 
+   .episodes {
+     background-color: var(--trek-white-color);
+   }
+
    h2 {
      color: var(--trek-white-color);
      background-color: var(--trek-header-color);
@@ -42,15 +46,27 @@
 
     <paper-material elevation="[[_elevation]]" class="fit">
       <paper-header-panel mode="standard">
-        <paper-toolbar id="seriesHeader">
-          <h2>Choose A Series</h2>
+        <paper-toolbar id="episodeHeader">
+          <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
+          <h2 hero hero-id="heroBottom" id="titleCard">[[series.prettyTitle]]</h2>
         </paper-toolbar>
-        <template is="dom-repeat" items="[[series]]">
-          <paper-button id$="[[item.title]]" class="layout horizontal flex" on-tap="selectSeries">
-            <span class="flex">[[item.prettyTitle]]</span>
-            <iron-icon class="self-center" icon="chevron-right"></iron-icon>
-          </paper-button>
-        </template>
+        <div class="episodes fit">
+          <template is="dom-repeat" items="[[episodes]]">
+            <paper-button on-tap="selectEpisode" class="layout horizontal flex">
+              <paper-item>
+                <paper-item-body>
+                  <div>
+                    <span class="flex">[[item.title]]</span>
+                    <iron-icon icon="chevron-right"></iron-icon>
+                  </div>
+                  <div secondary style="text-align: left;">
+                    <span>[[item.number]]</span>
+                  </div>
+                </paper-item-body>
+              </paper-item>
+            </paper-button>
+          </template>
+        </div>
       </paper-header-panel>
     </paper-material>
     
@@ -58,7 +74,7 @@
   <script>
 
    Polymer({
-     is: "series-list",
+     is: "episode-list",
 
      behaviors: [
        Polymer.NeonSharedElementAnimatableBehavior
@@ -69,8 +85,8 @@
          type: Object,
          value: function() {
            return {
-             'genHero': this.$.seriesHeader,
-             'genBody': this.$.seriesHeader
+             'genHero': this.$.episodeHeader,
+             'genBody': this.$.episodeHeader
            }
          }
        },
@@ -112,34 +128,42 @@
            }
          }
        },
+       
+       selected: {
+         type: Object,
+         value: 0,
+         notify: true
+       },
 
        series: {
+         type: Object,
+       },
+
+       episodes: {
          type: Array
        },
 
-       selected: {
-         type: Number,
-         notify: true
-       },
-
-       seriesIndex: {
-         type: Number,
+       selectedEpisode: {
+         type: Object,
          notify: true
        }
-  
+       
      },
 
-     selectSeries: function(e){
-//       console.log("series-list model", e.model.index);
+     goBack: function(){
+       this.selected--;
+     },
+
+     selectEpisode: function(e){
+       console.log("model", e.model.index);
        var idx = e.model.index;
-       this.seriesIndex = idx;
-       this.sharedElements.genBody = e.srcElement.id;
-//       console.log("sharedElements", this.sharedElements);
+       this.selectedEpisode = this.episodes[idx];
+       console.log("episode: ", this.selectedEpisode);
        this.selected++;
      },
 
      ready: function(){
-       console.log("series-list ready");
+       console.log("episode-list ready");
      }
 
    });
