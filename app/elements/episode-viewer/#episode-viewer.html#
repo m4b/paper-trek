@@ -1,3 +1,6 @@
+<link rel="import" href="series-list.html">
+<link rel="import" href="episode-list.html">
+
 <dom-module id="episode-list">
   <style>
 
@@ -64,7 +67,7 @@
 
       <paper-material elevation="[[_elevation]]" class="fit">
         <paper-header-panel mode="standard">
-          <paper-toolbar>
+          <paper-toolbar id="seriesHeader">
             <h2>Choose A Series</h2>
           </paper-toolbar>
           <template is="dom-repeat" items="[[_series]]">
@@ -78,7 +81,7 @@
 
       <paper-material elevation="[[_elevation]]" class="fit">
         <paper-header-panel mode="standard">
-          <paper-toolbar>
+          <paper-toolbar id="episodeHeader">
             <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
             <h2 hero hero-id="heroBottom" id="titleCard">[[_selectedSeries.prettyTitle]]</h2>
           </paper-toolbar>
@@ -114,7 +117,69 @@
    Polymer({
      is: "episode-list",
 
+     behaviors: [
+       Polymer.NeonSharedElementAnimatableBehavior
+     ],
+
      properties: {
+       sharedElements: {
+         type: Object,
+         value: function() {
+           return {
+             'genHero': this.$.episodeHeader,
+             'genBody': this.$.seriesHeader
+           }
+         }
+       },
+
+       animationConfig: {
+         type: Object,
+         value: function() {
+           return {
+             // the outgoing page defines the 'exit' animation
+             'exit':
+             [
+               {
+                 name: 'hero-animation',
+                 id: 'genBody',
+                 fromPage: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'genHero',
+                 fromPage: this
+               }
+             ],
+             // incoming defines the 'entry' (for hero)
+             'entry':
+             [
+               {
+                 name: 'fade-in-animation',
+                 node: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'genHero',
+                 toPage: this,
+                 timing: {
+                   delay: 150
+                 }
+               }
+               /*
+               {
+                 name: 'hero-animation',
+                 id: 'genBody',
+                 toPage: this,
+                 timing: {
+                   delay: 150
+                 }
+               }
+               */
+             ]
+           }
+         }
+       },
+     
        _selected: {
          type: Object,
          value: 0
