@@ -3,12 +3,10 @@
 
    :host {
      --paper-menu-selected-item: var(--trek-selected-color);
+     @apply(--layout-fit);
    }
 
    paper-material {
-   }
-
-   paper-header-panel {
    }
 
    paper-button::shadow paper-ripple {
@@ -70,7 +68,7 @@
 
   <template>
 
-    <neon-animated-pages id="navigationController" selected="{{_selected}}" class="fullbleed layout horizontal">
+    <neon-animated-pages id="navigationController" selected="{{_selected}}">
 
       <section>
         <paper-material elevation="[[_elevation]]">
