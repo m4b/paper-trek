@@ -62,9 +62,9 @@
 
     <neon-animated-pages id="navigationController" selected="{{_selected}}">
 
-      <series-list selected="{{_selected}}" series="[[_series]]" series-index="{{_seriesIndex}}"></series-list>
-      <episode-list selected="{{_selected}}" series="[[_selectedSeries]]" episodes="[[_selectedEpisodes]]" selected-episode="{{_selectedEpisode}}"></episode-list>
-      <episode-card id="card" episode="[[_selectedEpisode]]" class="fit">
+      <series-list id="seriesList" selected="{{_selected}}" series="[[_series]]" series-index="{{_seriesIndex}}"></series-list>
+      <episode-list id="episodeList" selected="{{_selected}}" series="[[_selectedSeries]]" episodes="[[_selectedEpisodes]]" selected-episode="{{_selectedEpisode}}"></episode-list>
+      <episode-card id="episodeCard" id="card" episode="[[_selectedEpisode]]" class="fit">
         <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
       </episode-card>
       
@@ -85,8 +85,8 @@
          type: Object,
          value: function() {
            return {
-             'genHero': this.$.seriesHeader,
-             'genBody': this.$.seriesHeader
+             'genHero': this.$.seriesList,
+             'genBody': this.$.seriesList
            }
          }
        },
@@ -142,21 +142,17 @@
 
        _seriesIndex: {
          type: Number,
-         notify: true,
-         observer: '_indexChanged'
+         notify: true
        },
 
        _selectedSeries: {
          type: Object,
-         notify: true,
-         reflectAttribute: true
+         notify: true
        },
 
        _selectedEpisodes: {
          type: Array,
-         observer: '_episodesChanged',
-         notify: true,
-         reflectAttribute: true
+         notify: true
        },
 
        _selectedEpisode: {
@@ -167,21 +163,19 @@
      },
 
      observers: [
-       '_seriesChanged(_selectedSeries, _selectedEpisodes)'
+       '_indexChanged(_seriesIndex)'
      ],
 
      _indexChanged: function(idx){
        console.log("_indexChanged", idx);
        var id = series[idx].title;
        /* todo; remove this, no this in observers */
+       //selectedSeries = series[idx];
+       //selectedEpisodes = data[id];
        this._selectedSeries = series[idx];
        this._selectedEpisodes = data[id];
      },
-     
-     _seriesChanged: function(series, eps){
-       console.log("series changed", series);
-     },
-     
+        
      _episodesChanged: function(episodes){
        console.log("episode-viewer _episodesChanged", episodes);
      },
@@ -192,6 +186,19 @@
      
      _selectedChanged: function(selected){
        console.log("episode-viewer selectedChanged", selected);
+       switch (selected){
+         case 0:
+           this.sharedElements.genHeader = this.$.seriesList;
+           break;
+         case 1:
+           this.sharedElements.genHeader = this.$.episodeList;
+           break;
+         case 2:
+           this.sharedElements.genHeader = this.$.episodeCard;
+           break;
+         default:
+           this.sharedElements.genHeader = this.$.seriesList;
+       }
      },
 
      goBack: function(){
