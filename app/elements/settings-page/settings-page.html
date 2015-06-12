@@ -35,14 +35,14 @@
     <paper-material elevation="2">
       <h3 id="header" class="flex">Generate Random Episodes From</h3>
       <section id="content" class="content">
-        <template is="dom-repeat" items="[[_keys]]">
+        <template id="keys" is="dom-repeat" items="[[_keys]]">
           <div class="layout center horizontal row">
-            <span class="flex">[[item.displayName]]</span>
-            <paper-toggle-button id$="[[item.key]]" checked="[[item.checked]]" on-change="_onChange"></paper-toggle-button>
+            <span class="series flex">[[item.displayName]]</span>
+            <paper-toggle-button class="toggle" id$="[[item.key]]" checked="[[item.checked]]" on-change="_onChange"></paper-toggle-button>
           </div>
         </template>
       </section>
-    </paper-material>      
+    </paper-material>
   </template>
 </dom-module>
 <script>
@@ -69,41 +69,57 @@
        type: Object,
        value: function() {
          return {
-           // the outgoing page defines the 'exit' animation
-           'entry':
-           [
-             {
-               name: 'hero-animation',
-               id: 'genBody',
-               toPage: this
-             },
-             {
-               name: 'hero-animation',
-               id: 'genHero',
-               toPage: this,
-               timing: {
-                 delay: 150
+             'entry':
+             [
+               {
+                 name: 'hero-animation',
+                 id: 'genBody',
+                 toPage: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'genHero',
+                 toPage: this,
+                 timing: {
+                   delay: 75
+                 }
+               },
+               {
+                 name: 'cascaded-animation',
+                 animation: 'slide-from-left-animation',
+                 timing: {
+                   delay: 125
+                 }
+               },
+               {
+                 name: 'cascaded-animation',
+                 animation: 'scale-up-animation',
+                 timing: {
+                   delay: 150
+                 }
                }
-             }
-           ],
-           'exit':
-           [
-             {
-               name: 'fade-out-animation',
-               node: this
-             },
-             {
-              name: 'hero-animation',
-               id: 'genHero',
-               fromPage: this
-             }/*
-             {
-               name: 'hero-animation',
-               id: 'genBody',
-               fromPage: this
-             }
-             */
-           ]
+             ],
+             'exit':
+             [
+               {
+                 name: 'cascaded-animation',
+                 animation: 'scale-down-animation',
+               },
+               {
+                 name: 'cascaded-animation',
+                 animation: 'slide-left-animation',
+                 timing: {
+                   delay: 100
+                 }
+               },               
+               {
+                 name: 'fade-out-animation',
+                 node: this,
+                 timing: {
+                   delay: 150
+                 }
+               },
+             ]
          }
        }
      },
@@ -170,20 +186,17 @@
    },
 
    created: function(){
-
      if (window.localStorage["original"] === undefined){
        var keys = ["original", "tng", "ds9", "voyager", "enterprise"];
        console.log("app first load");
        for (var i in keys){
          var key = keys[i];
          window.localStorage[key] = true;
-         console.log("loop: ", key, window.localStorage[key]);            
-       }
+         console.log("loop: ", key, window.localStorage[key]);               }
      }
    },
 
    ready: function(){
-
      var i = 0;
      for (var series in this.settings.random){
        var checked = window.localStorage[series] == "true";
@@ -191,11 +204,22 @@
        this._keys[i].checked = checked;
        i++;
      }
-     
-     console.log("ready settings-page init: ", this.settings);
-     console.log("_keys: ", this._keys);
+     //     console.log("ready settings-page init: ", this.settings);
+     //     console.log("_keys: ", this._keys);
+   },
 
+   attached: function(){
+     this.async(function(){
+       var toggles = Polymer.dom(this.root).querySelectorAll('.toggle');
+       var seriesNames = Polymer.dom(this.root).querySelectorAll('.series');       
+       console.log("settings-page ATTACHED", toggles, seriesNames);
+       this.animationConfig.entry[3].nodes = toggles;
+       this.animationConfig.entry[2].nodes = seriesNames;
+       this.animationConfig.exit[0].nodes = toggles;
+       this.animationConfig.exit[1].nodes = seriesNames;
+     }, 0);
    }
+   
 
  });
 

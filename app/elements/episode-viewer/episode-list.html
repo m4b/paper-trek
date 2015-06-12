@@ -40,10 +40,7 @@
    }
    
   </style>
-
-
   <template>
-
     <paper-material elevation="4" class="fit">
       <paper-header-panel mode="standard">
         <paper-toolbar id="episodeHeader">
@@ -69,7 +66,6 @@
         </div>
       </paper-header-panel>
     </paper-material>
-    
   </template>
   <script>
 
@@ -143,6 +139,11 @@
          type: Array
        },
 
+       episodeIndex: {
+         type: Number,
+         notify: true
+       },
+
        selectedEpisode: {
          type: Object,
          notify: true
@@ -155,10 +156,11 @@
      },
 
      selectEpisode: function(e){
-       console.log("model", e.model.index);
+       console.log("episode-list model", e.model.index);
        var idx = e.model.index;
-       this.selectedEpisode = this.episodes[idx];
-       console.log("episode: ", this.selectedEpisode);
+//       this.selectedEpisode = this.episodes[idx];
+//       console.log("episode: ", this.selectedEpisode);
+       this.episodeIndex = e.model.index;
        this.selected++;
      },
 

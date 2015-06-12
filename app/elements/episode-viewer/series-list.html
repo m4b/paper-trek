@@ -9,7 +9,7 @@
    paper-button::shadow paper-ripple {
      color: var(--trek-primary-color);
    }
-   
+
    paper-material {
      margin: 16px;
      height: auto;
@@ -43,7 +43,7 @@
     <paper-material elevation="5" class="fit">
       <paper-header-panel mode="standard">
         <paper-toolbar id="seriesHeader">
-          <h2>Choose A Series</h2>
+          <h2 id="seriesH2">Choose A Series</h2>
         </paper-toolbar>
         <template is="dom-repeat" items="[[series]]">
           <paper-button id$="[[item.title]]" class="layout horizontal flex" on-tap="selectSeries">
@@ -61,7 +61,8 @@
      is: "series-list",
 
      behaviors: [
-       Polymer.NeonSharedElementAnimatableBehavior
+       Polymer.NeonSharedElementAnimatableBehavior,
+       Polymer.NeonAnimationRunnerBehavior
      ],
 
      properties: {
@@ -69,8 +70,7 @@
          type: Object,
          value: function() {
            return {
-             'genHero': this.$.seriesHeader,
-             'genBody': this.$.seriesHeader
+             'genBody': this.$.seriesH2
            }
          }
        },
@@ -87,11 +87,6 @@
                  id: 'genBody',
                  fromPage: this
                },
-               {
-                 name: 'hero-animation',
-                 id: 'genHero',
-                 fromPage: this
-               }
              ],
              // incoming defines the 'entry' (for hero)
              'entry':
@@ -102,7 +97,7 @@
                },
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'genBody',
                  toPage: this,
                  timing: {
                    delay: 150
@@ -125,15 +120,23 @@
        seriesIndex: {
          type: Number,
          notify: true
-       }
+       },
   
+     },
+
+     listeners: {
+       'neon-animation-finish': '_onNeonAnimationFinish'
+     },
+
+     _onNeonAnimationFinish: function() {
+       console.log("series-list neon-animation-finished");
      },
 
      selectSeries: function(e){
 //       console.log("series-list model", e.model.index);
        var idx = e.model.index;
        this.seriesIndex = idx;
-       this.sharedElements.genBody = e.srcElement.id;
+//       this.sharedElements.genBody = e.srcElement.id;
 //       console.log("sharedElements", this.sharedElements);
        this.selected++;
      },

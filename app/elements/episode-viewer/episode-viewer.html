@@ -56,20 +56,21 @@
    }
    
   </style>
-
-
   <template>
-
     <neon-animated-pages id="navigationController" selected="{{_selected}}">
-
-      <series-list id="seriesList" selected="{{_selected}}" series="[[_series]]" series-index="{{_seriesIndex}}"></series-list>
-      <episode-list id="episodeList" selected="{{_selected}}" series="[[_selectedSeries]]" episodes="[[_selectedEpisodes]]" selected-episode="{{_selectedEpisode}}"></episode-list>
-      <episode-card id="episodeCard" id="card" episode="[[_selectedEpisode]]" class="fit">
+      <series-list id="seriesList"
+                   selected="{{_selected}}"
+                   series="[[_series]]"
+                   series-index="{{_seriesIndex}}"></series-list>
+      <episode-list id="episodeList"
+                    selected="{{_selected}}"
+                    series="[[_selectedSeries]]"
+                    episodes="[[_selectedEpisodes]]"
+                    episode-index="{{_episodeIndex}}"></episode-list>
+      <episode-card id="episodeCard" episode="[[_selectedEpisode]]" class="fit">
         <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
       </episode-card>
-      
     </neon-animated-pages>
-    
   </template>
   <script>
 
@@ -77,7 +78,8 @@
      is: "episode-viewer",
 
      behaviors: [
-       Polymer.NeonSharedElementAnimatableBehavior
+       Polymer.NeonSharedElementAnimatableBehavior,
+       Polymer.NeonAnimationRunnerBehavior
      ],
 
      properties: {
@@ -86,7 +88,7 @@
          value: function() {
            return {
              'genHero': this.$.seriesList,
-             'genBody': this.$.seriesList
+             'genBody': this.$.seriesList             
            }
          }
        },
@@ -107,6 +109,10 @@
                  name: 'hero-animation',
                  id: 'genHero',
                  fromPage: this
+               },
+               {
+                 animatable: this.$.seriesList,
+                 type: 'exit'
                }
              ],
              // incoming defines the 'entry' (for hero)
@@ -115,6 +121,11 @@
                {
                  name: 'fade-in-animation',
                  node: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'genBody',
+                 toPage: this,
                },
                {
                  name: 'hero-animation',
@@ -128,7 +139,15 @@
            }
          }
        },
-     
+
+       listeners: {
+         'neon-animation-finish': '_onNeonAnimationFinish'
+       },
+
+       _onNeonAnimationFinish: function() {
+         console.log("episode-viewer neon-animation-finished");
+       },
+
        _selected: {
          type: Number,
          value: 0,
@@ -136,56 +155,52 @@
          observer: '_selectedChanged'
        },
 
+       data: {
+         type: Object
+       },
+       
        _series: {
          type: Array
        },
 
        _seriesIndex: {
-         type: Number,
-         notify: true
+         type: Number
        },
 
        _selectedSeries: {
          type: Object,
-         notify: true
+         computed: '_computeSelectedSeries(_seriesIndex)'
        },
 
        _selectedEpisodes: {
          type: Array,
-         notify: true
+         computed: '_computeSelectedEpisodes(_seriesIndex, _series, data)'
+       },
+
+       _episodeIndex: {
+         type: Number
        },
 
        _selectedEpisode: {
          type: Object,
-         notify: true
+         computed: '_computeSelectedEpisode(_selectedEpisodes, _episodeIndex)'
        }
-       
      },
 
-     observers: [
-       '_indexChanged(_seriesIndex)'
-     ],
-
-     _indexChanged: function(idx){
-       console.log("_indexChanged", idx);
-       var id = series[idx].title;
-       /* todo; remove this, no this in observers */
-       //selectedSeries = series[idx];
-       //selectedEpisodes = data[id];
-       this._selectedSeries = series[idx];
-       this._selectedEpisodes = data[id];
+     _computeSelectedSeries: function(seriesIndex){
+       return series[seriesIndex];
      },
         
-     _episodesChanged: function(episodes){
-       console.log("episode-viewer _episodesChanged", episodes);
+     _computeSelectedEpisodes: function(seriesIndex, series, data){
+       var id = series[seriesIndex].title;
+       return data[id];
      },
 
-     _episodeChanged: function(episode){
-       console.log("episode-viewer _episodeChanged", episode);
+     _computeSelectedEpisode: function(episodes, episodeIndex){
+       return episodes[episodeIndex];
      },
      
      _selectedChanged: function(selected){
-       console.log("episode-viewer selectedChanged", selected);
        switch (selected){
          case 0:
            this.sharedElements.genHeader = this.$.seriesList;
@@ -206,22 +221,11 @@
      },
 
      ready: function(){
-       console.log("episode-viewer ready");
        this._series = series;
+       this.data = data;
      }
 
    });
 
   </script>
 </dom-module>
-
-
-<!--
-<core-list
-id="episodeList"
-data="{{episodeData}}"
-groups="{{episodeGroups}}"
-on-core-activate="{{episodeSelected}}">
-</core-list>
-
--->

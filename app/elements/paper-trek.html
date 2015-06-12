@@ -18,12 +18,10 @@
 
    neon-animated-pages {
      position: static;
-     /*
-     margin-left: 32px;
-     z-index: 4;
-     user-select: none;
-*/
- /* this isn't doing anything */
+   }
+
+   iron-icon {
+     margin-right: 8px;
    }
    
   </style>
@@ -51,9 +49,9 @@
 	</paper-toolbar>
         <!-- neon-animated-pages goes here -->
         <neon-animated-pages selected="{{_selected}}">
+          <episode-generator id="episodeGenerator" settings="[[_settings.random]]"></episode-generator>          
           <episode-viewer></episode-viewer>
-          <episode-generator id="episodeGenerator" settings="[[_settings.random]]"></episode-generator>
-          <settings-page settings="{{_settings}}"></settings-page>
+          <settings-page settings="{{_settings}}"></settings-page>          
         </neon-animated-pages>
       </paper-header-panel>
 
@@ -111,20 +109,20 @@
    _selectedChanged: function(selected){
      this.$.drawerPanel.closeDrawer();
      this._mode = this._pages[this._selected].mode;
-     console.log("this.mode", this._mode);
+//     console.log("this.mode", this._mode);
    },
    
    _getTitle: function(selected){
-     console.log("_pages: ", this._pages);
-     console.log("getting title with: ", selected);
+//     console.log("_pages: ", this._pages);
+//     console.log("getting title with: ", selected);
      return this._pages[selected].name;
    },
 
    ready: function(){
-     console.log("paper-trek ready");
+//     console.log("paper-trek ready");
      this.$.drawerPanel.forceNarrow = true;
      
-     console.log("_settings", this._settings);
+//     console.log("_settings", this._settings);
      this.$.episodeGenerator.getRandomEpisode(); // this has to be called here because
      //settings isn't ready in episode-generator's ready callback
    }
