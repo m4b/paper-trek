@@ -17,6 +17,12 @@
      margin-bottom: 16px;
    }
 
+   iron-image {
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+   }
+
    h1 {
      text-decoration: none;
      font-weight: normal;
@@ -47,7 +53,7 @@
             <span class="text-accent">E</span><span>{{episode.episode}}</span>
           </p>
         </span>
-          <iron-image id="thumb" style="width: 300px; height: 300px;" src="[[_imagePath]]" preload sizing="cover"></iron-image>
+          <iron-image id="thumb" style="width: auto; height: 300px;" src="[[_imagePath]]" preload sizing="contain"></iron-image>
         <div class="episode_text" hero hero-id="heroBottom" cross-fade>
           <h3 class="layout horizontal around-justified">
             <span class="flex">

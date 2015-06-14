@@ -28,7 +28,7 @@
    }
 
    episode-generator, episode-viewer, settings-page {
-     margin-left: 32px;
+/*     margin-left: 32px; */
    }
    
   </style>
@@ -48,7 +48,7 @@
 	</paper-menu>
       </paper-header-panel>
 
-      <paper-header-panel main mode="cover" tall-class="medium-tall">
+      <paper-header-panel main mode="standard" tall-class="medium-tall">
 	<paper-toolbar>
           <paper-icon-button paper-drawer-toggle icon="menu">
           </paper-icon-button>
@@ -65,74 +65,74 @@
     </paper-drawer-panel>
 
   </template>
-</dom-module>
-<script>
- Polymer({
-   is: "paper-trek",
+  <script>
+   Polymer({
+     is: "paper-trek",
 
-   properties: {
+     properties: {
 
-     _pages: {
-       type: Array,
-       readOnly: true,
-       value: function(){
-         return [
-           {name: 'Episode Generator',
-            hash:'random', icon:'refresh',
-            url:'', mode:'standard'},
-           {name: 'All Episodes', hash:'all',
-            icon:'view-list', mode: 'standard'},
-           {name: 'Settings', hash:'settings',
-            icon:'settings', url:'', mode:'cover'}
-         ]
+       _pages: {
+         type: Array,
+         readOnly: true,
+         value: function(){
+           return [
+             {name: 'Episode Generator',
+              hash:'random', icon:'refresh',
+              url:'', mode:'standard'},
+             {name: 'All Episodes', hash:'all',
+              icon:'view-list', mode: 'standard'},
+             {name: 'Settings', hash:'settings',
+              icon:'settings', url:'', mode:'cover'}
+           ]
+         }
+       },
+
+       _mode: {
+         type: String,
+         value: 'standard',
+         notify: true
+       },
+
+       _selected: {
+         type: Number,
+         value: 0,
+         notify: true,
+         observer: '_selectedChanged'
+       },
+       
+       _title: {
+         type: String,
+         notify: true,
+         computed: '_getTitle(_selected)'
+       },
+
+       /* one way data binding, flowing up from child (settings-page) */
+       _settings: {
+         type: Object
        }
      },
 
-     _mode: {
-       type: String,
-       value: 'standard',
-       notify: true
-     },
-
-     _selected: {
-       type: Number,
-       value: 0,
-       notify: true,
-       observer: '_selectedChanged'
+     _selectedChanged: function(selected){
+       this.$.drawerPanel.closeDrawer();
+       this._mode = this._pages[this._selected].mode;
+       //     console.log("this.mode", this._mode);
      },
      
-     _title: {
-       type: String,
-       notify: true,
-       computed: '_getTitle(_selected)'
+     _getTitle: function(selected){
+       //     console.log("_pages: ", this._pages);
+       //     console.log("getting title with: ", selected);
+       return this._pages[selected].name;
      },
 
-     /* one way data binding, flowing up from child (settings-page) */
-     _settings: {
-       type: Object
+     ready: function(){
+       //     console.log("paper-trek ready");
+       this.$.drawerPanel.forceNarrow = true;
+       
+       //     console.log("_settings", this._settings);
+       this.$.episodeGenerator.getRandomEpisode(); // this has to be called here because
+       //settings isn't ready in episode-generator's ready callback
      }
-   },
 
-   _selectedChanged: function(selected){
-     this.$.drawerPanel.closeDrawer();
-     this._mode = this._pages[this._selected].mode;
-//     console.log("this.mode", this._mode);
-   },
-   
-   _getTitle: function(selected){
-//     console.log("_pages: ", this._pages);
-//     console.log("getting title with: ", selected);
-     return this._pages[selected].name;
-   },
-
-   ready: function(){
-//     console.log("paper-trek ready");
-     this.$.drawerPanel.forceNarrow = true;
-     
-//     console.log("_settings", this._settings);
-     this.$.episodeGenerator.getRandomEpisode(); // this has to be called here because
-     //settings isn't ready in episode-generator's ready callback
-   }
-
- });
-</script>
+   });
+  </script>  
+</dom-module>
