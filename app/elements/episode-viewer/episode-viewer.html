@@ -67,8 +67,8 @@
                     series="[[_selectedSeries]]"
                     episodes="[[_selectedEpisodes]]"
                     episode-index="{{_episodeIndex}}"></episode-list>
-      <episode-card id="episodeCard" episode="[[_selectedEpisode]]" class="fit">
-        <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
+      <episode-card id="episodeCard" episode="[[_selectedEpisode]]">
+        <paper-icon-button id="episodeChevron" icon="chevron-left" on-tap="goBack"></paper-icon-button>
       </episode-card>
     </neon-animated-pages>
   </template>
@@ -89,7 +89,7 @@
            return {
              'genHero': this.$.seriesList,
              'genBody': this.$.seriesList             
-           }
+           };
          }
        },
 
@@ -140,19 +140,10 @@
          }
        },
 
-       listeners: {
-         'neon-animation-finish': '_onNeonAnimationFinish'
-       },
-
-       _onNeonAnimationFinish: function() {
-         console.log("episode-viewer neon-animation-finished");
-       },
-
        _selected: {
          type: Number,
          value: 0,
-         notify: true,
-         observer: '_selectedChanged'
+         notify: true
        },
 
        data: {
@@ -187,6 +178,10 @@
        }
      },
 
+     observers: [
+       '_selectedChanged(_selected, sharedElements)'
+     ],
+
      _computeSelectedSeries: function(seriesIndex){
        return series[seriesIndex];
      },
@@ -200,20 +195,26 @@
        return episodes[episodeIndex];
      },
      
-     _selectedChanged: function(selected){
+     _selectedChanged: function(selected, sharedElements){
+       // change the base episode-viewer hero transitions to whatever has been selected
        switch (selected){
          case 0:
-           this.sharedElements.genHeader = this.$.seriesList;
+           sharedElements.genHero = this.$.seriesList;
+           sharedElements.genBody = this.$.seriesList;           
            break;
          case 1:
-           this.sharedElements.genHeader = this.$.episodeList;
+           sharedElements.genHero = this.$.episodeList;
+           sharedElements.genBody = this.$.episodeList;
            break;
          case 2:
-           this.sharedElements.genHeader = this.$.episodeCard;
+           sharedElements.genHero = this.$.episodeChevron;
+           sharedElements.genBody = this.$.episodeCard;
            break;
          default:
-           this.sharedElements.genHeader = this.$.seriesList;
+           sharedElements.genHero = this.$.seriesList;
+           sharedElements.genBody = this.$.seriesList;           
        }
+//       console.log('episode-viewer selected changed', selected, sharedElements);
      },
 
      goBack: function(){
@@ -223,7 +224,48 @@
      ready: function(){
        this._series = series;
        this.data = data;
+     },
+
+     attached: function(){
+       // setting the episodeCards hero and animation config programmatically
+       // because less flexible than hardcoding and changing it's names that way?
+       /*
+       this.$.episodeCard.sharedElements = {'hero': this.$.episodeChevron};
+       this.$.episodeCard.animationConfig = {
+         'exit':
+         [
+           {
+             name: 'hero-animation',
+             id: 'hero',
+             fromPage: this.$.episodeCard,
+             timing: {
+               delay: 150
+             }
+           },
+           {
+             name: 'fade-out-animation',
+             node: this.$.episodeCard
+           }
+         ],
+         'entry':
+         [
+           {
+             name: 'fade-in-animation',
+             node: this.$.episodeCard
+           },
+           {
+             name: 'hero-animation',
+             id: 'hero',
+             toPage: this.$.episodeCard,
+             timing: {
+               delay: 150
+             }
+           }
+         ]
+       };
+     */       
      }
+     
 
    });
 

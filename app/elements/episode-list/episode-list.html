@@ -83,7 +83,7 @@
             <h2 hero hero-id="heroBottom" id="titleCard">[[_selectedSeries.prettyTitle]]</h2>
           </paper-toolbar>
           <div class="episodes fit">
-            <template is="dom-repeat" items="[[_selectedEpisodes]]">
+            <iron-list items="[[_selectedEpisodes]]" as="item">
               <paper-button on-tap="selectEpisode" class="layout horizontal flex">
                 <paper-item>
                   <paper-item-body>
@@ -97,7 +97,7 @@
                   </paper-item-body>
                 </paper-item>
               </paper-button>
-            </template>
+            </iron-list>
           </div>
         </paper-header-panel>
       </paper-material>

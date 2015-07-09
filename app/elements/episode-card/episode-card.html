@@ -26,6 +26,7 @@
    h1 {
      text-decoration: none;
      font-weight: normal;
+     z-index: 100;
    }
 
    .text-accent {
@@ -44,7 +45,7 @@
     <paper-material elevation="3" id="core_card" class="layout vertical">
       <paper-item>
         <content></content>
-        <h1>{{episode.title}}</h1>
+        <h1 id="title">{{episode.title}}</h1>
       </paper-item>
       <section class="body">
         <span class="episode_body" class="flex"><span>{{episode.seriesPretty}}</span>
@@ -72,7 +73,6 @@
 
    Polymer({
      is: "episode-card",
-
      
      behaviors: [
        Polymer.NeonAnimationRunnerBehavior
@@ -80,13 +80,47 @@
 
      properties: {
 
+       sharedElements: {
+         value: function(){
+           return {'hero': this.$.title};
+         }
+       },
+       
        animationConfig: {
          type: Object,
          value: function() {
            return {
-             name: 'fade-out-animation',
-             node: this
-           }
+             'exit':
+             [
+               {
+                 name: 'hero-animation',
+                 id: 'hero',
+                 fromPage: this,
+                 timing: {
+                   delay: 150
+                 }
+               },
+               {
+                 name: 'fade-out-animation',
+                 node: this
+               }
+             ],
+             'entry':
+             [
+               {
+                 name: 'fade-in-animation',
+                 node: this
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'hero',
+                 toPage: this,
+                 timing: {
+                   delay: 75
+                 }
+               }
+             ]
+           };
          }
        },
        
@@ -118,24 +152,11 @@
        }
 
      },
-
-     animate: function() {
-       console.log("card animating");
-       this.playAnimation();
-     },
-
-     listeners: {
-       'neon-animation-finish': '_onNeonAnimationFinish'
-     },
-     
-     _onNeonAnimationFinish: function() {
-       console.log('animation finish!');
-     },
-     
+   
      _episodeChanged: function(){
-       console.log("episode changed");
+//       console.log("episode changed");
        this._imagePath = "../../images/episodes/" + this.episode.thumb.name;
-       console.log("this._imagePath: ", this._imagePath);
+//       console.log("this._imagePath: ", this._imagePath);
      },
      
      ready: function(){

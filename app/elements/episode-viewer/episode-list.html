@@ -37,32 +37,39 @@
    iron-icon, paper-icon-button {
      color: var(--trek-highlight-color);
    }
+
+   iron-list {
+     height: 300px;
+   }
    
   </style>
   <template>
     <paper-material elevation="4" class="fit">
       <paper-header-panel mode="standard">
         <paper-toolbar id="episodeHeader">
-          <paper-icon-button icon="chevron-left" on-tap="goBack"></paper-icon-button>
-          <h2 hero hero-id="heroBottom" id="titleCard">[[series.prettyTitle]]</h2>
+          <paper-icon-button id="chevron" icon="chevron-left" on-tap="goBack"></paper-icon-button>
+          <h2 id="seriesH2">[[series.prettyTitle]]</h2>
         </paper-toolbar>
-        <div class="episodes fit">
-          <template is="dom-repeat" items="[[episodes]]">
-            <paper-button on-tap="selectEpisode" class="layout horizontal flex">
-              <paper-item>
-                <paper-item-body>
-                  <div>
-                    <span class="flex">[[item.title]]</span>
-                    <iron-icon icon="chevron-right"></iron-icon>
-                  </div>
-                  <div secondary style="text-align: left;">
-                    <span>[[item.number]]</span>
-                  </div>
-                </paper-item-body>
-              </paper-item>
-            </paper-button>
-          </template>
-        </div>
+        <!--         <div class="episodes fit"> -->
+<!--            <template is="dom-repeat" items="[[episodes]]" as="ep" class="fit"> -->
+           <iron-list items="[[episodes]]" as="ep" class="">
+             <template>
+              <paper-button on-tap="selectEpisode" class="layout horizontal flex">
+                <paper-item>
+                  <paper-item-body>
+                    <div>
+                      <span id$="[[_computeId(index)]]"class="flex">[[ep.title]]</span>
+                      <iron-icon icon="chevron-right"></iron-icon>
+                    </div>
+                    <div secondary style="text-align: left;">
+                      <span>[[ep.number]]</span>
+                    </div>
+                  </paper-item-body>
+                </paper-item>
+              </paper-button>
+            </template>
+           </iron-list>
+<!--          </div> -->
       </paper-header-panel>
     </paper-material>
   </template>
@@ -80,9 +87,8 @@
          type: Object,
          value: function() {
            return {
-             'genHero': this.$.episodeHeader,
-             'genBody': this.$.episodeHeader
-           }
+             'hero': this.$.seriesH2
+           };
          }
        },
 
@@ -95,13 +101,19 @@
              [
                {
                  name: 'hero-animation',
-                 id: 'genBody',
-                 fromPage: this
+                 id: 'hero',
+                 fromPage: this,
+                 timing: {
+                   delay: 150
+                 }
                },
                {
-                 name: 'hero-animation',
-                 id: 'genHero',
-                 fromPage: this
+                 name: 'fade-out-animation',
+                 node: this
+               },
+               {
+                 name: 'slide-left-animation',
+                 node: this.$.chevron
                }
              ],
              // incoming defines the 'entry' (for hero)
@@ -113,14 +125,21 @@
                },
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'hero',
                  toPage: this,
                  timing: {
                    delay: 150
                  }
-               }
+               },
+               {
+                 name: 'slide-from-left-animation',
+                 node: this.$.chevron,
+                 timing: {
+                   delay: 75
+                 }
+               }               
              ]
-           }
+           };
          }
        },
        
@@ -150,14 +169,20 @@
        
      },
 
+     _computeId: function(idx){
+       return 'ep'+idx;
+     },
+
      goBack: function(){
+       this.sharedElements.hero = this.$.seriesH2;
        this.selected--;
      },
 
      selectEpisode: function(e){
        console.log("episode-list model", e.model.index);
        var idx = e.model.index;
-//       this.selectedEpisode = this.episodes[idx];
+       this.sharedElements.hero = this.$$('#ep'+idx);
+       console.log('selected episode hero', this.$$('#ep'+idx));
 //       console.log("episode: ", this.selectedEpisode);
        this.episodeIndex = e.model.index;
        this.selected++;

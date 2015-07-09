@@ -36,7 +36,6 @@
    
   </style>
 
-
   <template>
 
     <paper-material elevation="5" class="fit">
@@ -45,8 +44,8 @@
           <h2 id="seriesH2">Choose A Series</h2>
         </paper-toolbar>
         <template is="dom-repeat" items="[[series]]">
-          <paper-button id$="[[item.title]]" class="layout horizontal flex" on-tap="selectSeries">
-            <span class="flex">[[item.prettyTitle]]</span>
+          <paper-button class="cascade layout horizontal flex" on-tap="selectSeries">
+            <span id$="[[item.title]]" class="flex">[[item.prettyTitle]]</span>
             <iron-icon class="self-center" icon="chevron-right"></iron-icon>
           </paper-button>
         </template>
@@ -69,7 +68,7 @@
          type: Object,
          value: function() {
            return {
-             'genBody': this.$.seriesH2
+             'hero': this.$.seriesH2
            }
          }
        },
@@ -78,28 +77,50 @@
          type: Object,
          value: function() {
            return {
-             // the outgoing page defines the 'exit' animation
+
+             'cascadeExit': {
+               name: 'cascaded-animation',
+               animation: 'slide-right-animation',
+               nodes: []
+             },
+
              'exit':
              [
                {
                  name: 'hero-animation',
-                 id: 'genBody',
+                 id: 'hero',
                  fromPage: this
                },
+               {
+                 name: 'cascaded-animation',
+                 animation: 'scale-down-animation',
+                 nodes: []
+               }
              ],
              // incoming defines the 'entry' (for hero)
              'entry':
              [
                {
                  name: 'fade-in-animation',
-                 node: this
+                 node: this,
+                 timing: {
+                   delay: 150
+                 }
                },
                {
                  name: 'hero-animation',
-                 id: 'genBody',
+                 id: 'hero',
                  toPage: this,
                  timing: {
-                   delay: 150
+                   delay: 75
+                 }
+               },
+               {
+                 name: 'cascaded-animation',
+                 animation: 'scale-up-animation',
+                 nodes: [],
+                 timing: {
+                   delay: 75
                  }
                }
              ]
@@ -123,25 +144,22 @@
   
      },
 
-     listeners: {
-       'neon-animation-finish': '_onNeonAnimationFinish'
-     },
-
-     _onNeonAnimationFinish: function() {
-       console.log("series-list neon-animation-finished");
-     },
-
      selectSeries: function(e){
-//       console.log("series-list model", e.model.index);
+//       console.log('series-list model', e.model);
        var idx = e.model.index;
+       var seriesName = this.$$('#' + seriesLookup(idx));
        this.seriesIndex = idx;
-//       this.sharedElements.genBody = e.srcElement.id;
-//       console.log("sharedElements", this.sharedElements);
+       this.sharedElements.hero = seriesName; // set the hero target to series name in the list
        this.selected++;
      },
 
-     ready: function(){
-       console.log("series-list ready");
+     attached: function(){
+       console.log("series-list attached");
+       this.async(function(){
+         var nodes = Polymer.dom(this.root).querySelectorAll('.cascade');
+         this.animationConfig.exit[1].nodes = nodes;
+         this.animationConfig.entry[2].nodes = nodes;
+       },0);
      }
 
    });
