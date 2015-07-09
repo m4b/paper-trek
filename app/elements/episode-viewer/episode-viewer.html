@@ -224,48 +224,7 @@
      ready: function(){
        this._series = series;
        this.data = data;
-     },
-
-     attached: function(){
-       // setting the episodeCards hero and animation config programmatically
-       // because less flexible than hardcoding and changing it's names that way?
-       /*
-       this.$.episodeCard.sharedElements = {'hero': this.$.episodeChevron};
-       this.$.episodeCard.animationConfig = {
-         'exit':
-         [
-           {
-             name: 'hero-animation',
-             id: 'hero',
-             fromPage: this.$.episodeCard,
-             timing: {
-               delay: 150
-             }
-           },
-           {
-             name: 'fade-out-animation',
-             node: this.$.episodeCard
-           }
-         ],
-         'entry':
-         [
-           {
-             name: 'fade-in-animation',
-             node: this.$.episodeCard
-           },
-           {
-             name: 'hero-animation',
-             id: 'hero',
-             toPage: this.$.episodeCard,
-             timing: {
-               delay: 150
-             }
-           }
-         ]
-       };
-     */       
      }
-     
 
    });
 
