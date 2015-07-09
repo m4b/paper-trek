@@ -24,7 +24,8 @@
      is: "episode-generator",
 
      behaviors: [
-       Polymer.NeonSharedElementAnimatableBehavior
+       Polymer.NeonSharedElementAnimatableBehavior,
+       Polymer.NeonAnimationRunnerBehavior
      ],
 
      properties: {
@@ -55,6 +56,10 @@
                  name: 'hero-animation',
                  id: 'genHero',
                  fromPage: this
+               },
+               {
+                 animatable: this.$.card,
+                 type: 'exit'
                }
              ],
              // incoming defines the 'entry' (for hero)
@@ -71,9 +76,7 @@
                  timing: {
                    delay: 75
                  }
-                 
                },
-
                {
                  name: 'hero-animation',
                  id: 'genHero',
@@ -81,6 +84,10 @@
                  timing: {
                    delay: 150
                  }
+               },
+               {
+                 animatable: this.$.card,
+                 type: 'entry'
                }
                /*
                {

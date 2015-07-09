@@ -45,7 +45,7 @@
     <paper-material elevation="3" id="core_card" class="layout vertical">
       <paper-item>
         <content></content>
-        <h1 id="title">{{episode.title}}</h1>
+        <h1 class="cascade" id="title">{{episode.title}}</h1>
       </paper-item>
       <section class="body">
         <span class="episode_body" class="flex"><span class="cascade">{{episode.seriesPretty}}</span>
@@ -75,7 +75,8 @@
      is: "episode-card",
      
      behaviors: [
-       Polymer.NeonAnimationRunnerBehavior
+       Polymer.NeonAnimationRunnerBehavior,
+       Polymer.NeonAnimatableBehavior
      ],
 
      properties: {
@@ -121,7 +122,7 @@
                  name: 'cascaded-animation',
                  animation: 'scale-up-animation',
                  nodes: nodes
-               },    
+               },
                {
                  name: 'fade-in-animation',
                  node: this
@@ -166,6 +167,10 @@
          notify: true
        }
 
+     },
+
+     animate: function(){
+       this.playAnimation('entry');
      },
    
      _episodeChanged: function(){
