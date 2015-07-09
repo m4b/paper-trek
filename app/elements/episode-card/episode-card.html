@@ -48,22 +48,22 @@
         <h1 id="title">{{episode.title}}</h1>
       </paper-item>
       <section class="body">
-        <span class="episode_body" class="flex"><span>{{episode.seriesPretty}}</span>
+        <span class="episode_body" class="flex"><span class="cascade">{{episode.seriesPretty}}</span>
           <p class="episode_body">
-            <span class="text-accent">S</span><span>{{episode.season}}</span>
-            <span class="text-accent">E</span><span>{{episode.episode}}</span>
+            <span class="cascade text-accent">S</span><span class="cascade">{{episode.season}}</span>
+            <span class="cascade text-accent">E</span><span class="cascade">{{episode.episode}}</span>
           </p>
         </span>
-          <iron-image id="thumb" style="width: auto; height: 300px;" src="[[_imagePath]]" preload sizing="contain"></iron-image>
+          <iron-image class="cascade" id="thumb" style="width: auto; height: 300px;" src="[[_imagePath]]" preload sizing="contain"></iron-image>
         <div class="episode_text" hero hero-id="heroBottom" cross-fade>
           <h3 class="layout horizontal around-justified">
             <span class="flex">
-              <em>Stardate: </em>
-              <span>{{episode.stardate}}</span>
+              <em class="cascade">Stardate: </em>
+              <span class="cascade">{{episode.stardate}}</span>
             </span>
           </h3>
-          <p><em>Airdate: </em><span>{{episode.airdate}}</span></p>
-          <p><a href$="{{episode.href}}">Memory Alpha</a></p>
+          <p><em class="cascade">Airdate: </em><span class="cascade">{{episode.airdate}}</span></p>
+          <p><a class="cascade" href$="{{episode.href}}">Memory Alpha</a></p>
         </div>
       </section>
     </paper-material>
@@ -89,9 +89,16 @@
        animationConfig: {
          type: Object,
          value: function() {
+           var nodes = Polymer.dom(this.root).querySelectorAll('.cascade');
+           console.log('episode-card nodes', nodes);
            return {
              'exit':
              [
+               {
+                 name: 'cascaded-animation',
+                 animation: 'scale-down-animation',
+                 nodes: nodes
+               },
                {
                  name: 'hero-animation',
                  id: 'hero',
@@ -102,11 +109,19 @@
                },
                {
                  name: 'fade-out-animation',
-                 node: this
+                 node: this,
+                 timing: {
+                   delay: 75
+                 }
                }
              ],
              'entry':
              [
+               {
+                 name: 'cascaded-animation',
+                 animation: 'scale-up-animation',
+                 nodes: nodes
+               },    
                {
                  name: 'fade-in-animation',
                  node: this
