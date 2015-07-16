@@ -50,26 +50,23 @@
           <paper-icon-button id="chevron" icon="chevron-left" on-tap="goBack"></paper-icon-button>
           <h2 id="seriesH2">[[series.prettyTitle]]</h2>
         </paper-toolbar>
-        <!--         <div class="episodes fit"> -->
-<!--            <template is="dom-repeat" items="[[episodes]]" as="ep" class="fit"> -->
-           <iron-list items="[[episodes]]" as="ep" class="">
-             <template>
-              <paper-button on-tap="selectEpisode" class="layout horizontal flex">
-                <paper-item>
-                  <paper-item-body>
-                    <div>
-                      <span id$="[[_computeId(index)]]"class="flex">[[ep.title]]</span>
-                      <iron-icon icon="chevron-right"></iron-icon>
-                    </div>
-                    <div secondary style="text-align: left;">
-                      <span>[[ep.number]]</span>
-                    </div>
-                  </paper-item-body>
-                </paper-item>
-              </paper-button>
-            </template>
-           </iron-list>
-<!--          </div> -->
+        <iron-list items="[[episodes]]" as="ep" class="">
+          <template>
+            <paper-button on-tap="selectEpisode" class="layout horizontal flex">
+              <paper-item>
+                <paper-item-body>
+                  <div>
+                    <span id$="[[_computeId(index)]]"class="flex">[[ep.title]]</span>
+                    <iron-icon icon="chevron-right"></iron-icon>
+                  </div>
+                  <div secondary style="text-align: left;">
+                    <span>[[ep.number]]</span>
+                  </div>
+                </paper-item-body>
+              </paper-item>
+            </paper-button>
+          </template>
+        </iron-list>
       </paper-header-panel>
     </paper-material>
   </template>
@@ -183,7 +180,7 @@
        var idx = e.model.index;
        this.sharedElements.hero = this.$$('#ep'+idx);
        console.log('selected episode hero', this.$$('#ep'+idx));
-//       console.log('episode: ', this.selectedEpisode);
+       //       console.log('episode: ', this.selectedEpisode);
        this.episodeIndex = e.model.index;
        this.selected++;
      },
