@@ -47,7 +47,7 @@
 </dom-module>
 <script>
  Polymer({
-   is: "settings-page",
+   is: 'settings-page',
 
    behaviors: [
      Polymer.NeonSharedElementAnimatableBehavior
@@ -61,7 +61,7 @@
          return {
            'genHero': this.$.header,
            'genBody': this.$.content
-         }
+         };
        }
      },
      
@@ -127,9 +127,8 @@
                    delay: 150
                  }
                },
-
              ]
-         }
+         };
        }
      },
      
@@ -139,28 +138,28 @@
        value: function(){
          return [
            {
-             key: "original",
-             displayName: "The Original",
+             key: 'original',
+             displayName: 'The Original',
              checked: true
            },
            {
-             key: "tng",
-             displayName: "The Next Generation",
+             key: 'tng',
+             displayName: 'The Next Generation',
              checked: true
            },
            {
-             key:  "ds9",
-             displayName: "Deep Space Nine",
+             key:  'ds9',
+             displayName: 'Deep Space Nine',
              checked: true
            },
            {
-             key:  "voyager",
-             displayName: "Voyager",
+             key:  'voyager',
+             displayName: 'Voyager',
              checked: true
            },
            {
-             key:  "enterprise",
-             displayName: "Enterprise",
+             key:  'enterprise',
+             displayName: 'Enterprise',
              checked: true
            }
          ];
@@ -190,38 +189,38 @@
      var id = e.srcElement.id;
      var checked = e.srcElement.checked;
      this.settings.random[id] = checked;
-     console.log("settings: ", this.settings);
+     console.log('settings: ', this.settings);
      window.localStorage[id] = checked;
    },
 
    created: function(){
-     if (window.localStorage["original"] === undefined){
-       var keys = ["original", "tng", "ds9", "voyager", "enterprise"];
-       console.log("app first load");
+     if (window.localStorage.original === undefined){
+       var keys = ['original', 'tng', 'ds9', 'voyager', 'enterprise'];
+       console.log('app first load');
        for (var i in keys){
          var key = keys[i];
          window.localStorage[key] = true;
-         console.log("loop: ", key, window.localStorage[key]);               }
+         console.log('loop: ', key, window.localStorage[key]);               }
      }
    },
 
    ready: function(){
      var i = 0;
      for (var series in this.settings.random){
-       var checked = window.localStorage[series] == "true";
+       var checked = window.localStorage[series] == 'true';
        this.settings.random[series] = checked;
        this._keys[i].checked = checked;
        i++;
      }
-     //     console.log("ready settings-page init: ", this.settings);
-     //     console.log("_keys: ", this._keys);
+     //     console.log('ready settings-page init: ', this.settings);
+     //     console.log('_keys: ', this._keys);
    },
 
    attached: function(){
      this.async(function(){
        var toggles = Polymer.dom(this.root).querySelectorAll('.toggle');
        var seriesNames = Polymer.dom(this.root).querySelectorAll('.series');       
-       console.log("settings-page ATTACHED", toggles, seriesNames);
+       console.log('settings-page ATTACHED', toggles, seriesNames);
        this.animationConfig.entry[3].nodes = toggles;
        this.animationConfig.entry[2].nodes = seriesNames;
        this.animationConfig.exit[0].nodes = toggles;

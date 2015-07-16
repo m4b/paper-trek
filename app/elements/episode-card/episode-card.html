@@ -42,7 +42,7 @@
   </style>
 
   <template>
-    <paper-material elevation="3" id="core_card" class="layout vertical">
+    <paper-material elevation="3" id="material" class="layout vertical">
       <paper-item>
         <content></content>
         <h1 class="cascade" id="title">{{episode.title}}</h1>
@@ -72,7 +72,7 @@
   <script>
 
    Polymer({
-     is: "episode-card",
+     is: 'episode-card',
      
      behaviors: [
        Polymer.NeonAnimationRunnerBehavior,
@@ -91,6 +91,7 @@
          type: Object,
          value: function() {
            var nodes = Polymer.dom(this.root).querySelectorAll('.cascade');
+           nodes.reverse();
            console.log('episode-card nodes', nodes);
            return {
              'exit':
@@ -134,6 +135,16 @@
                  timing: {
                    delay: 75
                  }
+               },
+               {
+                 name: 'scale-up-animation',
+                 node: this.$.material,
+                 axis: 'x',
+                 timing: {
+                   delay: 25,
+                   easing: 1,
+                   duration: 350
+                 }
                }
              ]
            };
@@ -174,13 +185,13 @@
      },
    
      _episodeChanged: function(){
-//       console.log("episode changed");
-       this._imagePath = "../../images/episodes/" + this.episode.thumb.name;
-//       console.log("this._imagePath: ", this._imagePath);
+//       console.log('episode changed');
+       this._imagePath = '../../images/episodes/' + this.episode.thumb.name;
+//       console.log('this._imagePath: ', this._imagePath);
      },
      
      ready: function(){
-       console.log("episode-card ready");
+       console.log('episode-card ready');
      }
    });
 

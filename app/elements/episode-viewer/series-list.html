@@ -56,7 +56,7 @@
   <script>
 
    Polymer({
-     is: "series-list",
+     is: 'series-list',
 
      behaviors: [
        Polymer.NeonSharedElementAnimatableBehavior,
@@ -69,7 +69,7 @@
          value: function() {
            return {
              'hero': this.$.seriesH2
-           }
+           };
          }
        },
 
@@ -77,13 +77,11 @@
          type: Object,
          value: function() {
            return {
-
              'cascadeExit': {
                name: 'cascaded-animation',
                animation: 'slide-right-animation',
                nodes: []
              },
-
              'exit':
              [
                {
@@ -124,7 +122,7 @@
                  }
                }
              ]
-           }
+           };
          }
        },
 
@@ -154,7 +152,7 @@
      },
 
      attached: function(){
-       console.log("series-list attached");
+       console.log('series-list attached');
        this.async(function(){
          var nodes = Polymer.dom(this.root).querySelectorAll('.cascade');
          this.animationConfig.exit[1].nodes = nodes;

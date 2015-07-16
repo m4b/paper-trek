@@ -21,7 +21,7 @@
   <script>
 
    Polymer({
-     is: "episode-generator",
+     is: 'episode-generator',
 
      behaviors: [
        Polymer.NeonSharedElementAnimatableBehavior,
@@ -36,7 +36,7 @@
            return {
              'genHero': this.$.fab,
              'genBody': this.$.card
-           }
+           };
          }
        },
 
@@ -100,7 +100,7 @@
                }
                */
              ]
-           }
+           };
          }
        },
 
@@ -123,7 +123,7 @@
        // this probably makes certain configurations less random
        // but we don't care because this isn't openssl
        // (which admittedly does have a _proven_ track record of success)
-       console.log("random settings: ", this.settings);
+       console.log('random settings: ', this.settings);
        for (var key in this.settings) {
          if (this.settings.hasOwnProperty(key)) {
            if (this.settings[key]){
@@ -139,13 +139,13 @@
        var series = data[seriesBin[seriesIndex]];
 
        /*
-          console.log("series: ", series);
-          console.log("series index: ", seriesIndex);
-          console.log("series length: ", series.length);
+          console.log('series: ', series);
+          console.log('series index: ', seriesIndex);
+          console.log('series length: ', series.length);
         */
        var max = series.length - 1;
        var episodeIndex = this._getRandomInt(0, max);
-       //console.log("episode index: ", episodeIndex);
+       //console.log('episode index: ', episodeIndex);
 
        // now get the new episode, and change what we're displaying
        this._episode = series[episodeIndex];
@@ -159,8 +159,8 @@
      },
 
      ready: function(){
-       console.log("episode-generator ready");
-       console.log("settings: ", this.settings);
+       console.log('episode-generator ready');
+       console.log('settings: ', this.settings);
      }
 
    });

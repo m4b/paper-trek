@@ -76,7 +76,7 @@
   <script>
 
    Polymer({
-     is: "episode-list",
+     is: 'episode-list',
 
      behaviors: [
        Polymer.NeonSharedElementAnimatableBehavior
@@ -179,17 +179,17 @@
      },
 
      selectEpisode: function(e){
-       console.log("episode-list model", e.model.index);
+       console.log('episode-list model', e.model.index);
        var idx = e.model.index;
        this.sharedElements.hero = this.$$('#ep'+idx);
        console.log('selected episode hero', this.$$('#ep'+idx));
-//       console.log("episode: ", this.selectedEpisode);
+//       console.log('episode: ', this.selectedEpisode);
        this.episodeIndex = e.model.index;
        this.selected++;
      },
 
      ready: function(){
-       console.log("episode-list ready");
+       console.log('episode-list ready');
      }
 
    });
