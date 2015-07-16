@@ -224,6 +224,10 @@
      ready: function(){
        this._series = series;
        this.data = data;
+     },
+
+     attached: function(){
+       console.log('children', Polymer.dom(this.$.seriesList.root).childNodes);
      }
 
    });

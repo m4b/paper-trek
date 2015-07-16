@@ -92,7 +92,7 @@
          value: function() {
            var nodes = Polymer.dom(this.root).querySelectorAll('.cascade');
            nodes.reverse();
-           console.log('episode-card nodes', nodes);
+//           console.log('episode-card nodes', nodes);
            return {
              'exit':
              [
@@ -155,7 +155,6 @@
          type: Object,
          notify: true,
          reflectAttribute: true,
-         observer: '_episodeChanged',
          value: function(){
            return {
              title: 'Untitled',
@@ -175,7 +174,8 @@
 
        _imagePath: {
          type: String,
-         notify: true
+         notify: true,
+         computed: '_computeImagePath(episode.thumb.name)'
        }
 
      },
@@ -183,11 +183,9 @@
      animate: function(){
        this.playAnimation('entry');
      },
-   
-     _episodeChanged: function(){
-//       console.log('episode changed');
-       this._imagePath = '../../images/episodes/' + this.episode.thumb.name;
-//       console.log('this._imagePath: ', this._imagePath);
+
+     _computeImagePath: function(path){
+       return '../../images/episodes/' + path;
      },
      
      ready: function(){
