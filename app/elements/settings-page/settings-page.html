@@ -119,7 +119,14 @@
                    delay: 150
                  }
                },
-               // TODO: NO bodyHero TRANSITION
+               {
+                 name: 'hero-animation',
+                 id: 'titleBody',
+                 fromPage: this,
+                 timing: {
+                   delay: 75
+                 }
+               },
                {
                  name: 'hero-animation',
                  id: 'titleHero',
@@ -127,7 +134,7 @@
                  timing: {
                    delay: 150
                  }
-               },
+               }
              ]
          };
        }
@@ -221,7 +228,7 @@
      this.async(function(){
        var toggles = Polymer.dom(this.root).querySelectorAll('.toggle');
        var seriesNames = Polymer.dom(this.root).querySelectorAll('.series');       
-       console.log('settings-page ATTACHED', toggles, seriesNames);
+//       console.log('settings-page ATTACHED', toggles, seriesNames);
        this.animationConfig.entry[3].nodes = toggles;
        this.animationConfig.entry[2].nodes = seriesNames;
        this.animationConfig.exit[0].nodes = toggles;

@@ -43,12 +43,14 @@
         <paper-toolbar id="seriesHeader">
           <h2 id="seriesH2">Choose A Series</h2>
         </paper-toolbar>
+        <section>
         <template is="dom-repeat" items="[[series]]">
           <paper-button class="cascade layout horizontal flex" on-tap="selectSeries">
             <span id$="[[item.title]]" class="flex">[[item.prettyTitle]]</span>
             <iron-icon class="self-center" icon="chevron-right"></iron-icon>
           </paper-button>
         </template>
+        </section>
       </paper-header-panel>
     </paper-material>
     
@@ -60,7 +62,8 @@
 
      behaviors: [
        Polymer.NeonSharedElementAnimatableBehavior,
-       Polymer.NeonAnimationRunnerBehavior
+       Polymer.NeonAnimationRunnerBehavior,
+       Polymer.NeonAnimatableBehavior
      ],
 
      properties: {
@@ -77,11 +80,6 @@
          type: Object,
          value: function() {
            return {
-             'cascadeExit': {
-               name: 'cascaded-animation',
-               animation: 'slide-right-animation',
-               nodes: []
-             },
              'exit':
              [
                {
@@ -139,7 +137,7 @@
          type: Number,
          notify: true
        },
-  
+       
      },
 
      selectSeries: function(e){

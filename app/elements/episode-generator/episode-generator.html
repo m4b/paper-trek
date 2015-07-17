@@ -10,14 +10,11 @@
    
   </style>
   <template>
-    <episode-card id="card" episode="[[_episode]]">
-      
-    </episode-card>
-
+    
+    <episode-card id="card" episode="[[_episode]]"></episode-card>
     <paper-fab id="fab" icon="refresh" on-tap="getRandomEpisode"></paper-fab>
     
   </template>
-
   <script>
 
    Polymer({
@@ -35,8 +32,8 @@
          value: function() {
            var image = Polymer.dom(this.$.card.root).querySelector('iron-image');
            return {
-             titleHero: this.$.fab,
-             bodyHero: image
+             'titleHero': this.$.fab,
+             'bodyHero': image
            };
          }
        },
@@ -51,7 +48,10 @@
                {
                  name: 'hero-animation',
                  id: 'bodyHero',
-                 fromPage: this
+                 fromPage: this,
+                 timing: {
+                   delay: 75
+                 }
                },
                {
                  name: 'hero-animation',
@@ -61,7 +61,15 @@
                {
                  animatable: this.$.card,
                  type: 'exit'
+               },
+               {
+                 name: 'fade-out-animation',
+                 node: this,
+                 timing: {
+                   delay: 150
+                 }
                }
+               
              ],
              // incoming defines the 'entry' (for hero)
              'entry':
@@ -73,10 +81,7 @@
                {
                  name: 'hero-animation',
                  id: 'bodyHero',
-                 toPage: this,
-                 timing: {
-                   delay: 75
-                 }
+                 toPage: this
                },
                {
                  name: 'hero-animation',
@@ -114,7 +119,7 @@
        // this probably makes certain configurations less random
        // but we don't care because this isn't openssl
        // (which admittedly does have a _proven_ track record of success)
-       console.log('random settings: ', this.settings);
+//       console.log('random settings: ', this.settings);
        for (var key in this.settings) {
          if (this.settings.hasOwnProperty(key)) {
            if (this.settings[key]){
@@ -140,8 +145,18 @@
 
        // now get the new episode, and change what we're displaying
        this._episode = series[episodeIndex];
-
+       this.sharedElements.bodyHero = null; // because there's a weird bug that calls all the hero transitions or something
        this.$.card.animate();
+//       this.sharedElements.bodyHero = Polymer.dom(this.$.card.root).querySelector('iron-image');
+     },
+
+     listeners: {
+       'neon-animation-finish': 'reset'
+     },
+
+     reset: function(){
+       console.log('resetting');
+  //     this.sharedElements.bodyHero = Polymer.dom(this.$.card.root).querySelector('iron-image');
      },
      
      _getRandomInt: function(min, max) {

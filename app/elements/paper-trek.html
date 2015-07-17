@@ -87,12 +87,6 @@
          }
        },
 
-       _mode: {
-         type: String,
-         value: 'standard',
-         notify: true
-       },
-
        _selected: {
          type: Number,
          value: 0,
@@ -103,7 +97,7 @@
        _title: {
          type: String,
          notify: true,
-         computed: '_getTitle(_selected)'
+         computed: '_getTitle(_selected, _pages)'
        },
 
        /* one way data binding, flowing up from child (settings-page) */
@@ -112,16 +106,15 @@
        }
      },
 
-     _selectedChanged: function(selected){
+     _selectedChanged: function(){
        this.$.drawerPanel.closeDrawer();
-       this._mode = this._pages[this._selected].mode;
        //     console.log("this.mode", this._mode);
      },
      
-     _getTitle: function(selected){
-       //     console.log("_pages: ", this._pages);
+     _getTitle: function(selected, pages){
+       //     console.log("_pages: ", pages);
        //     console.log("getting title with: ", selected);
-       return this._pages[selected].name;
+       return pages[selected].name;
      },
 
      ready: function(){
