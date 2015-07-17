@@ -33,9 +33,10 @@
        sharedElements: {
          type: Object,
          value: function() {
+           var image = Polymer.dom(this.$.card.root).querySelector('iron-image');
            return {
-             'genHero': this.$.fab,
-             'genBody': this.$.card
+             titleHero: this.$.fab,
+             bodyHero: image
            };
          }
        },
@@ -49,12 +50,12 @@
              [
                {
                  name: 'hero-animation',
-                 id: 'genBody',
+                 id: 'bodyHero',
                  fromPage: this
                },
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'titleHero',
                  fromPage: this
                },
                {
@@ -71,7 +72,7 @@
                },
                {
                  name: 'hero-animation',
-                 id: 'genBody',
+                 id: 'bodyHero',
                  toPage: this,
                  timing: {
                    delay: 75
@@ -79,7 +80,7 @@
                },
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'titleHero',
                  toPage: this,
                  timing: {
                    delay: 150
@@ -89,16 +90,6 @@
                  animatable: this.$.card,
                  type: 'entry'
                }
-               /*
-               {
-                 name: 'hero-animation',
-                 id: 'genBody',
-                 toPage: this,
-                 timing: {
-                   delay: 150
-                 }
-               }
-               */
              ]
            };
          }
@@ -150,7 +141,6 @@
        // now get the new episode, and change what we're displaying
        this._episode = series[episodeIndex];
 
-       // this should work but it doesn't       
        this.$.card.animate();
      },
      
@@ -159,8 +149,8 @@
      },
 
      ready: function(){
-       console.log('episode-generator ready');
-       console.log('settings: ', this.settings);
+//       console.log('episode-generator ready');
+//       console.log('settings: ', this.settings);
      }
 
    });

@@ -59,8 +59,8 @@
        type: Object,
        value: function() {
          return {
-           'genHero': this.$.header,
-           'genBody': this.$.content
+           'titleHero': this.$.header,
+           'bodyHero': this.$.content
          };
        }
      },
@@ -73,12 +73,12 @@
              [
                {
                  name: 'hero-animation',
-                 id: 'genBody',
+                 id: 'bodyHero',
                  toPage: this
                },
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'titleHero',
                  toPage: this,
                  timing: {
                    delay: 75
@@ -119,9 +119,10 @@
                    delay: 150
                  }
                },
+               // TODO: NO bodyHero TRANSITION
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'titleHero',
                  fromPage: this,
                  timing: {
                    delay: 150

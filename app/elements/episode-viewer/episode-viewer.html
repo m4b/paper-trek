@@ -86,9 +86,11 @@
        sharedElements: {
          type: Object,
          value: function() {
+           var toolbar = Polymer.dom(this.$.seriesList.root).querySelector('paper-toolbar');
+           console.log('toolbar:', toolbar);
            return {
-             'genHero': this.$.seriesList,
-             'genBody': this.$.seriesList             
+             titleHero : this.$.seriesList,
+             bodyHero : toolbar
            };
          }
        },
@@ -102,12 +104,12 @@
              [
                {
                  name: 'hero-animation',
-                 id: 'genBody',
+                 id: 'bodyHero',
                  fromPage: this
                },
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'titleHero',
                  fromPage: this
                },
                {
@@ -124,16 +126,20 @@
                },
                {
                  name: 'hero-animation',
-                 id: 'genBody',
+                 id: 'bodyHero',
                  toPage: this,
                },
                {
                  name: 'hero-animation',
-                 id: 'genHero',
+                 id: 'titleHero',
                  toPage: this,
                  timing: {
                    delay: 150
                  }
+               },
+               {
+                 animatable: this.$.seriesList,
+                 type: 'entry'
                }
              ]
            };
@@ -199,20 +205,23 @@
        // change the base episode-viewer hero transitions to whatever has been selected
        switch (selected){
          case 0:
-           sharedElements.genHero = this.$.seriesList;
-           sharedElements.genBody = this.$.seriesList;           
+           var toolbar = Polymer.dom(this.$.seriesList.root).querySelector('paper-toolbar');
+           sharedElements.titleHero = this.$.seriesList;
+           sharedElements.bodyHero = toolbar;
            break;
          case 1:
-           sharedElements.genHero = this.$.episodeList;
-           sharedElements.genBody = this.$.episodeList;
+           var toolbar = Polymer.dom(this.$.episodeList.root).querySelector('paper-toolbar');
+           sharedElements.titleHero = toolbar;
+           sharedElements.bodyHero = this.$.episodeList;
            break;
          case 2:
-           sharedElements.genHero = this.$.episodeChevron;
-           sharedElements.genBody = this.$.episodeCard;
+           sharedElements.titleHero = this.$.episodeChevron;
+           sharedElements.bodyHero = this.$.episodeCard;
            break;
          default:
-           sharedElements.genHero = this.$.seriesList;
-           sharedElements.genBody = this.$.seriesList;           
+           var toolbar = Polymer.dom(this.$.seriesList.root).querySelector('paper-toolbar');
+           sharedElements.titleHero = toolbar;
+           sharedElements.bodyHero = this.$.seriesList;
        }
 //       console.log('episode-viewer selected changed', selected, sharedElements);
      },
@@ -227,8 +236,8 @@
      },
 
      attached: function(){
-       var children = Polymer.dom(this.$.seriesList.root).childNodes;
-       console.log('children', Polymer.dom(this.$.seriesList.root).childNodes, children[1]);
+//       var children = Polymer.dom(this.$.seriesList.root).childNodes;
+//       console.log('children', Polymer.dom(this.$.seriesList.root).childNodes, children[1]);
      }
 
    });
