@@ -143,9 +143,12 @@
      selectSeries: function(e){
        console.log('series-list model', e.model);
        var idx = e.model.index;
-       var seriesName = this.$$('#' + seriesLookup(idx));
-       this.seriesIndex = idx;
-       this.sharedElements.hero = seriesName; // set the hero target to series name in the list
+       if (idx != this.seriesIndex){
+         console.log('not the same');
+         var seriesName = this.$$('#' + seriesLookup(idx));
+         this.seriesIndex = idx;
+         this.sharedElements.hero = seriesName; // set the hero target to series name in the list
+       }
        this.selected++;
      },
 

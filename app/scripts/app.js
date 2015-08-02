@@ -5,5 +5,6 @@
   window.addEventListener('WebComponentsReady', function() {
     document.querySelector('body').removeAttribute('unresolved');
   });
+    console.log('WebComponentsReady');
 
 })(document);

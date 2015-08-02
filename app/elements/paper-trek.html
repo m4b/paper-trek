@@ -23,14 +23,24 @@
      margin-right: 8px;
    }
 
-   paper-icon-button {
-     z-index: 100;
-   }
-
    episode-generator, episode-viewer, settings-page {
 /*     margin-left: 32px; */
    }
-   
+
+   #polymer {
+     color: var(--secondary-text-color);
+     text-align: center;
+     display: block;
+   }
+
+   #polymerIcon {
+     color: var(--trek-highlight-color);
+   }
+
+   #divider {
+     margin: 8px;
+   }
+
   </style>
   <template>
     <paper-drawer-panel id="drawerPanel">
@@ -46,12 +56,15 @@
             </paper-item>
           </template>
 	</paper-menu>
+          <hr id="divider">
+          <paper-item id="polymer">
+            <span>Built with <iron-icon id="polymerIcon" icon="polymer"></iron-icon></span>
+          </paper-item>
       </paper-header-panel>
 
       <paper-header-panel main mode="standard" tall-class="medium-tall">
 	<paper-toolbar>
-          <paper-icon-button paper-drawer-toggle icon="menu">
-          </paper-icon-button>
+          <paper-icon-button paper-drawer-toggle icon="menu"></paper-icon-button>
 	  <div>{{_title}}</div>          
 	</paper-toolbar>
         <!-- neon-animated-pages goes here -->
@@ -124,6 +137,13 @@
        //     console.log("_settings", this._settings);
        this.$.episodeGenerator.getRandomEpisode(); // this has to be called here because
        //settings isn't ready in episode-generator's ready callback
+     },
+
+     /* because on mobile safari WebComponentsReady does not seem to fire */
+     attached: function(){
+       this.async(function(){
+         document.querySelector('body').removeAttribute('unresolved');
+       },100);
      }
 
    });

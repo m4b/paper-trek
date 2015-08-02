@@ -219,7 +219,7 @@
            animationConfig.entry[2].animatable = this.$.seriesList;
            break;
          case 1:
-           var toolbar = Polymer.dom(this.$.episodeList.root).querySelector('paper-toolbar');
+           toolbar = Polymer.dom(this.$.episodeList.root).querySelector('paper-toolbar');
            var list = Polymer.dom(this.$.episodeList.root).querySelector('iron-list');
            sharedElements.titleHero = toolbar;
            sharedElements.bodyHero = list;
@@ -233,7 +233,7 @@
            animationConfig.entry[2].animatable = this.$.episodeCard;           
            break;
          default:
-           var toolbar = Polymer.dom(this.$.seriesList.root).querySelector('paper-toolbar');
+           toolbar = Polymer.dom(this.$.seriesList.root).querySelector('paper-toolbar');
            sharedElements.titleHero = toolbar;
            sharedElements.bodyHero = this.$.seriesList;
            animationConfig.exit[3].animatable = this.$.seriesList;
