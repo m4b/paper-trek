@@ -1,0 +1,112 @@
+<dom-module id="copyright-notice">
+  <style>
+    :host {
+      display: block;
+    }
+
+   iron-image {
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+   }
+
+   paper-material{
+     background-color: var(--trek-white-color);
+     margin: 16px;
+     padding: 16px;
+   }
+
+
+  </style>
+  <template>
+    <paper-material elevation="2">
+      <h1 id="title">Star Trek™ Content Disclaimer</h1>
+      All Star Trek™, Star Trek: The Next Generation™, and other Star Trek related content present in this app is copyrighted and/or registered trademarks of CBS Corporation. In no case is the use of any said copyrighted material, with or without identifying symbols, intended as a claim of ownership or infringement of those copyrights/trademarks by the maker of this application and its content providers.
+      <br>
+      <br>
+      Credit for all images goes to the website <a href="http://en.memory-alpha.wikia.com">Memory Alpha</a>, and every episode card provides a direct link for that content.  More details on Memory Alpha's copyright policy can be found here <a href="http://en.memory-alpha.wikia.com/wiki/Memory_Alpha:Copyrights">here</a> and Fair Use can be found <a href="https://en.wikipedia.org/wiki/Fair_use">here</a>.
+      <br>
+      <br>
+      <strong>Live long, and prosper:</strong>
+      <br>
+      <iron-image id="spock" style="width: auto; height: 300px;" src="../../images/Spock_performing_Vulcan_salute.jpg" preload sizing="contain"></iron-image>      
+    </paper-material>
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'copyright-notice',
+
+   behaviors: [
+     Polymer.NeonSharedElementAnimatableBehavior
+   ],
+   
+   properties: {
+
+     sharedElements: {
+       type: Object,
+       value: function() {
+         return {
+           titleHero: this.$.title,
+           bodyHero: this.$.spock
+         };
+       }
+     },
+     
+     animationConfig: {
+       type: Object,
+       value: function() {
+         return {
+             'exit':
+             [
+               {
+                 name: 'fade-out-animation',
+                 node: this,
+                 timing: {
+                   delay: 150
+                 }
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'bodyHero',
+                 fromPage: this,
+                 timing: {
+                   delay: 75
+                 }
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'titleHero',
+                 fromPage: this,
+                 timing: {
+                   delay: 150
+                 }
+               }
+             ],
+
+           'entry':
+             [
+               {
+                 name: 'hero-animation',
+                 id: 'bodyHero',
+                 toPage: this,
+               },
+               {
+                 name: 'hero-animation',
+                 id: 'titleHero',
+                 toPage: this,
+                 timing: {
+                   delay: 150
+                 }
+               }
+             ]
+         };
+       }
+     }
+     
+      
+      }
+    });
+  })();
+  </script>
+</dom-module>

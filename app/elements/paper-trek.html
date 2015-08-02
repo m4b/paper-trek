@@ -70,8 +70,9 @@
         <!-- neon-animated-pages goes here -->
         <neon-animated-pages selected="{{_selected}}">
           <episode-generator id="episodeGenerator" settings="[[_settings.random]]"></episode-generator>
-          <episode-viewer></episode-viewer>          
+          <episode-viewer></episode-viewer>
           <settings-page settings="{{_settings}}"></settings-page>
+          <copyright-notice></copyright-notice>
         </neon-animated-pages>
       </paper-header-panel>
 
@@ -95,7 +96,10 @@
              {name: 'All Episodes', hash:'all',
               icon:'view-list', mode: 'standard'},
              {name: 'Settings', hash:'settings',
-              icon:'settings', url:'', mode:'cover'}
+              icon:'settings', url:'', mode:'cover'},
+             {name: 'Copyright Notice', hash:'notice',
+              icon:'report', url:'', mode:'cover'}
+
            ];
          }
        },
