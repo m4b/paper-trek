@@ -1,5 +1,7 @@
 # Boldly going where no paper element has gone before!
 
+![star trek badge].content/promo-512x512.png)
+
 Infinite diversity in infinite combinations got you down?  Have you and your loved one ever needed to watch a Star Trek episode, but couldn't figure out which one?
 
 Well, now you can let Paper Trek solve all your problems for you!
@@ -17,6 +19,8 @@ Paper Trek is the ultimate Trek experience for fans worldwide, built using the l
 Enjoy, have fun, and remember:
 
 Live long, and prosper!
+
+![Spock omg lurv you](.content/Spock_performing_Vulcan_salute.jpg)
 
 # Build
 
