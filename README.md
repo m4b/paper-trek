@@ -81,4 +81,4 @@ It's not hard, just boring.
 
 You'll also want splashscreen/icon autogen scripts as well.  I can dig those up too, if the need arises.
 
-Lastly I've included a signed APK in the release section; you'll need to enable install from third-party/untrusted sources, or whatever it is, in settings.
+Lastly I've included [a signed APK](https://github.com/m4b/paper-trek/releases/download/v1.0.1/paper-trek-v1.0.1.apk) in the release section; you'll need to enable install from third-party/untrusted sources, or whatever it is, in settings.
