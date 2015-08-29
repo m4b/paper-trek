@@ -1,13 +1,15 @@
 {
     "name": "paper-trek",
     "description": "Boldly going where no paper-element has gone before",
-    "homepage": "http://www.m4b.io/projects/paper-trek/",
+    "homepage": "http://paper-trek.xyz/",
     "version": "1.0.1",
     "keywords": [
 	"star", "trek", "star-trek", "paper", "material", "design"
     ],
     "author": "m4b",
+    "license": "LICENSE",
     "dependencies": {
+        "polymer": "Polymer/polymer#^1.1.0",
 	"iron-elements": "PolymerElements/iron-elements#latest",
 	"paper-elements": "PolymerElements/paper-elements#latest",
 	"neon-elements": "PolymerElements/neon-elements#latest"

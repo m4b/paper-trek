@@ -58,6 +58,13 @@ ANDROID_HOME=/opt/local/android-sdk
 
 in the script.  If that is not the location (it probably won't be unless you're running Archlinux), then you have to change the `ANDROID_HOME` environment variable to what the SDKs path/location is.
 
+Now setup the environment:
+
+1. `cordova create mobile`
+2. `cd mobile`
+3. `cordova platform add android`
+4. `cd ..`
+
 Now that that's over with, you can:
 
 1. Plug an android phone in.
