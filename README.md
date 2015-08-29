@@ -1,6 +1,6 @@
 # Boldly going where no paper element has gone before!
 
-![star trek badge].content/promo-512x512.png)
+![star trek badge](.content/promo-512x512.png)
 
 Infinite diversity in infinite combinations got you down?  Have you and your loved one ever needed to watch a Star Trek episode, but couldn't figure out which one?
 
